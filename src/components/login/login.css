@@ -1,0 +1,45 @@
+
+.regis-head h1{
+    font-size: 1.5rem;
+    font-weight: 400;
+}
+
+.password-i-field{
+    position: relative;
+}
+
+.showpwdlogin{
+    position: absolute;
+    top: 75%;
+    right:  2%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}
+
+.show-eye{
+    display: block;
+}
+.hide-eye{
+    display: none;
+}
+
+.login-btn{
+    margin-top: 1.2rem;
+    border: .15rem solid rgb(255, 255, 255);
+    border-radius: 5px;
+    line-height: 1.6rem;
+    width: 100%;
+    padding: 0.2rem 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-block;
+    background-color: #5b71f1;
+    color: #040635;
+}
+.login-btn:hover{
+    opacity: .9;
+}
+
+.email-i-field, .password-i-field{
+    margin-bottom: 1.2rem;
+}

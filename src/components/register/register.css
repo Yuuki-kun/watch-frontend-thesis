@@ -1,0 +1,219 @@
+
+.regis-page-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: rgba(230, 231, 247, 0.5); /* Đặt độ trong ở giá trị cuối cùng (ở đây là 0.5) */
+}
+.register-container{
+    background: #fff;
+    z-index: 100;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 30vw;
+    border: 1px solid transparent;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    box-shadow: 3px 3px 11px 1px rgba(0,0,0,0.6)
+}
+
+
+.regis-head{
+    text-align: center;
+}
+.regis-head p{
+    margin-bottom: 0;
+}
+
+.regis-head-bottom-in-line{
+    height: .065rem;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    margin-bottom: 1.2rem;
+    box-shadow: 0 0 2px 1px rgba(12, 6, 55, 0.3);
+    border-radius: 60%;
+}
+.regis-head h1{
+    font-size: 1.8rem;
+    line-height: 3.2rem;
+}
+    
+.register-form{
+    max-width: 100%;
+    height: 70%;
+}
+
+.name-input-container{
+    display: flex;
+    gap: .5rem;
+}
+
+.form-label{
+    margin-bottom: 0.25rem !important;
+}
+
+.span-input{
+    width: 100%;
+    position: relative;
+    display: flex;
+    font-size: 14px;
+}
+
+
+.hint-container{
+    display: flex;
+    position: absolute;
+    background-color: transparent;
+    right: .5rem;
+    top: 0;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.password-eye{
+    background-color: transparent;
+    :hover{
+        cursor: pointer;
+    }
+}
+
+.valid{
+    position: relative;
+    opacity: 1;
+    background-color: transparent;
+    color: green;
+    margin-left: .5rem;
+
+}
+.hint-hide{
+    position: absolute;
+    right: -3rem;
+    display: none;
+}
+.in-valid{
+    position: relative;
+    opacity: 1;
+    background-color: transparent;
+    color: #ff4d4f;
+    margin-left: .5rem;
+}
+
+.form-control{
+    padding: 0.25rem 0.5rem !important;  
+
+}
+.form-control:focus{
+    border-color: #2e82ff !important;
+}
+
+.input-container{
+    position: relative;
+    margin-bottom: .65rem;
+}
+
+.form-control.active{
+    border: 1px solid #ff4d4f !important;
+}
+
+.instructions {
+    color: #ff4d4f !important;
+    font-size: 0.85rem;
+    position: relative;
+    display: flex;
+    opacity: 1;
+    transition: opacity .2s, transform 0.2s;
+    transform: translateY(10px);
+    margin-bottom: 0;
+    white-space: normal;
+}
+
+.offscreen {
+    position: relative;
+    top: -3rem;
+    color: red;
+    font-size: .85rem;
+    opacity: 0;
+    margin-bottom: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    z-index: -999;
+}
+
+.offscreen.confirmnote{
+    position: absolute;
+}
+
+.matchPwdContainer{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.instructions > svg {
+    margin-right: 0.25rem;
+}
+
+.hide {
+    display: none;
+}
+
+
+
+.invalid {
+    color: red;
+    margin-left: 0.25rem;
+}
+
+.errmsg {
+    background-color: lightpink;
+    color: firebrick;
+    font-weight: bold;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.line {
+    display: inline-block;
+}
+
+.signup-btn-container{
+    position: relative;
+    letter-spacing: .175rem;
+    align-items: center;
+    text-align: center;
+}
+
+.sign-up-btn{
+    border: .15rem solid rgb(158, 158, 158);
+    border-radius: 5px;
+    line-height: 1.6rem;
+    width: 100%;
+    padding: 0.2rem 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-block;
+    background-color: #081b87;
+    color: #ffffff;
+    opacity: 1;
+}
+.sign-up-btn:disabled{
+    opacity: .5;
+    color: #47474a;
+}
+.sign-up-btn:focus{
+    background-color: rgb(16, 12, 80);
+}
+
+.banned-icon{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5rem;
+    opacity: .8;
+    color: #bec4cf;
+}
