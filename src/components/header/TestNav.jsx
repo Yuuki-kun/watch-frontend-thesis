@@ -9,8 +9,10 @@ import { FaRegUser } from "react-icons/fa6";
 
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 const TestNav = () => {
+  const { auth } = useAuth();
   const [showSideBar, setShowSidebar] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const inputSearchRef = useRef();
@@ -61,10 +63,10 @@ const TestNav = () => {
 
   window.addEventListener("scroll", function () {
     const fixed_nav = document.querySelector(".nav-s");
-    fixed_nav.classList.toggle("active", window.scrollY > 75);
+    fixed_nav?.classList?.toggle("active", window.scrollY > 75);
 
     const scrolled_search = document.querySelector(".search-container");
-    scrolled_search.classList.toggle(
+    scrolled_search?.classList?.toggle(
       "scrolled-search-active",
       window.scrollY > 40
     );
@@ -87,6 +89,7 @@ const TestNav = () => {
       search.classList.add("inactive-search");
     }
   }, [showSearch]);
+  console.log(auth?.email);
   return (
     <>
       <nav className="nav-s">
@@ -165,18 +168,31 @@ const TestNav = () => {
                   Test dropdown <span>tcm</span>
                 </h3>
                 <ul className="dropdown-list">
-                  <li className="dropdown-item">
-                    <p>item 1</p>
-                  </li>
-                  <li className="dropdown-item">
-                    <p>item 1</p>
-                  </li>
-                  <li className="dropdown-item">
-                    <p>item 1</p>
-                  </li>
-                  <li className="dropdown-item">
-                    <p>item 1</p>
-                  </li>
+                  {auth?.email ? (
+                    <>
+                      <li className="dropdown-item">
+                        <p>item 1</p>
+                      </li>
+                      <li className="dropdown-item">
+                        <p>item 1</p>
+                      </li>
+                      <li className="dropdown-item">
+                        <p>item 1</p>
+                      </li>
+                      <li className="dropdown-item">
+                        <p>item 1</p>
+                      </li>
+                    </>
+                  ) : (
+                    <>
+                      <li className="dropdown-item">
+                        <Link to={"login"}>login</Link>
+                      </li>
+                      <li className="dropdown-item">
+                        <Link to={"register"}>register</Link>
+                      </li>
+                    </>
+                  )}
                 </ul>
               </div>
             </div>
@@ -198,7 +214,7 @@ const TestNav = () => {
         <div className="recommend-category">
           recommend links
           <ul>
-            <li>a</li>
+            <li>login</li>
             <li>a</li>
             <li>a</li>
           </ul>
