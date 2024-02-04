@@ -16,34 +16,32 @@ const TestNav = () => {
   const inputSearchRef = useRef();
   const userMenuRef = useRef();
   const userIconRef = useRef();
-  useEffect(() => {
-    const search = document.querySelector(".search-container");
-    if (showSearch) {
-      search.classList.add("active-search");
-      search.classList.remove("inactive-search");
-    } else {
-      search.classList.remove("active-search");
-      search.classList.add("inactive-search");
-    }
+  // useEffect(() => {
+  //   const search = document.querySelector(".search-container");
+  //   if (showSearch) {
+  //     search.classList.add("active-search");
+  //     search.classList.remove("inactive-search");
+  //   } else {
+  //     search.classList.remove("active-search");
+  //     search.classList.add("inactive-search");
+  //   }
 
-    const handleScroll = () => {
-      console.log("Scrolled!");
-      setShowSearch(false);
-    };
+  //   const handleScroll = () => {
+  //     console.log("Scrolled!");
+  //     setShowSearch(false);
+  //   };
 
-    if (showSearch) {
-      inputSearchRef.current.focus();
-      window.addEventListener("scroll", handleScroll, { passive: true });
-    } else {
-      window.addEventListener("scroll", handleScroll, { passive: true });
-    }
+  //   if (showSearch) {
+  //     inputSearchRef.current.focus();
+  //     window.addEventListener("scroll", handleScroll, { passive: true });
+  //   } else {
+  //     window.addEventListener("scroll", handleScroll, { passive: true });
+  //   }
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [showSearch]);
-
-  console.log(showSearch);
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, [showSearch]);
 
   const [openDropdownUser, setOpenDropdownUser] = useState(false);
 
@@ -70,7 +68,25 @@ const TestNav = () => {
       "scrolled-search-active",
       window.scrollY > 40
     );
+    console.log("scrolllllllllll");
+
+    if (showSearch) {
+      setShowSearch(false);
+    }
   });
+
+  useEffect(() => {
+    const search = document.querySelector(".search-container");
+
+    if (showSearch) {
+      inputSearchRef.current.focus();
+      search.classList.add("active-search");
+      search.classList.remove("inactive-search");
+    } else {
+      search.classList.remove("active-search");
+      search.classList.add("inactive-search");
+    }
+  }, [showSearch]);
   return (
     <>
       <nav className="nav-s">
