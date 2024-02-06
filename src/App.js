@@ -27,12 +27,13 @@ function App() {
         {CreateRoutesFromList(publicRoutesNoLayout)}
 
         {/* user routes */}
+        <Route element={<Persist />}>
+          <Route path="/" element={<UserLayout />}>
+            {CreateRoutesFromList(publicRoutes)}
 
-        <Route path="/" element={<UserLayout />}>
-          {CreateRoutesFromList(publicRoutes)}
-
-          <Route element={<RequireAuth allowedRoles={[1234]} />}>
-            {CreateRoutesFromList(userPrivateRoutes)}
+            <Route element={<RequireAuth allowedRoles={[1234]} />}>
+              {CreateRoutesFromList(userPrivateRoutes)}
+            </Route>
           </Route>
         </Route>
 

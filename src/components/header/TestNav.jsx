@@ -1,12 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./header.css";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { FaBars } from "react-icons/fa";
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import { CiUser } from "react-icons/ci";
 import { IoSearch } from "react-icons/io5";
 import { FaRegUser } from "react-icons/fa6";
-
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
@@ -46,6 +43,7 @@ const TestNav = () => {
   // }, [showSearch]);
 
   const [openDropdownUser, setOpenDropdownUser] = useState(false);
+  const [mobileProductMenu, setMobileProductMenu] = useState(false);
 
   useEffect(() => {
     const handler = (e) => {
@@ -70,7 +68,6 @@ const TestNav = () => {
       "scrolled-search-active",
       window.scrollY > 40
     );
-    console.log("scrolllllllllll");
 
     if (showSearch) {
       setShowSearch(false);
@@ -89,7 +86,7 @@ const TestNav = () => {
       search.classList.add("inactive-search");
     }
   }, [showSearch]);
-  console.log(auth?.email);
+  console.log("auth=" + JSON.stringify(auth));
   return (
     <>
       <nav className="nav-s">
@@ -97,9 +94,26 @@ const TestNav = () => {
           <li>
             <a href="#"> Blogs </a>
           </li>
-          <li>
-            <a href="#"> Products </a>
+          <li className="mobile-menu-container">
+            <button
+              className="mobileProductBtn"
+              onClick={() => {
+                setMobileProductMenu(!mobileProductMenu);
+              }}
+            >
+              Products
+            </button>
+            <div
+              className={`mobile-product-menu ${
+                mobileProductMenu ? "active" : ""
+              }`}
+            >
+              <p>a</p>
+              <p>b</p>
+              <p>c</p>
+            </div>
           </li>
+
           <li>
             <a href="#"> About </a>
           </li>
@@ -126,7 +140,17 @@ const TestNav = () => {
             <a href="#"> Blogs </a>
           </li>
           <li className="hide-on-mobile">
-            <a href="#"> Products </a>
+            <div className="h-100 product-link-container">
+              <a className="product-link" href="#">
+                Products
+              </a>
+              <div className="product-link-dropdown-content">
+                <div>cate a</div>
+                <div>cate b</div>
+                <div>cate c</div>
+                <div>cate d</div>
+              </div>
+            </div>
           </li>
           <li className="hide-on-mobile">
             <a href="#"> About </a>

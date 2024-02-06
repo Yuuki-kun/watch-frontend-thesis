@@ -10,8 +10,11 @@ import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import useAuth from "../../hooks/useAuth";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faBan } from "@fortawesome/free-solid-svg-icons";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import useRefreshToken from "../../hooks/useRefreshToken";
 const Register = () => {
+  const refresh = useRefreshToken();
+
   const [registerUser, setRegisterUser] = useState({
     firstName: "",
     lastName: "",
@@ -111,23 +114,29 @@ const Register = () => {
   //register
   const register = async (e) => {
     console.log("resu=" + registerUser);
-
+    setStartListener(true);
     e.preventDefault();
+    setAuth({});
     try {
       const response_data = await RegisterService(registerUser);
       console.log(response_data);
 
-      handleAuthAndLocalStorage(response_data, setAuth);
+      // handleAuthAndLocalStorage(response_data, setAuth);
 
-      setRegisterUser({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        role: "USER",
-      });
+      // setRegisterUser({
+      //   firstName: "",
+      //   lastName: "",
+      //   email: "",
+      //   password: "",
+      //   role: "USER",
+      // });
 
-      setSuccess(true);
+      // setSuccess(true);
+
+      setErrMsg(
+        "Registration success, please check out your email to active your account!"
+      );
+      errorRef.current.focus();
     } catch (error) {
       handleRegistrationErrors(error, setErrMsg, errorRef);
     }
@@ -164,8 +173,53 @@ const Register = () => {
 
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
-  console.log(location);
+  const navigate = useNavigate();
+  console.log("from=" + from);
 
+  const [localStorageValue, setLocalStorageValue] = useState(
+    localStorage.getItem("refreshToken")
+  );
+
+  const [startListener, setStartListener] = useState(false);
+
+  useEffect(() => {
+    if (startListener) {
+      console.log("get token");
+      const intervalId = setInterval(() => {
+        const newValue = localStorage.getItem("refreshToken");
+        console.log("waiting");
+        if (newValue !== localStorageValue) {
+          setLocalStorageValue(newValue);
+          refreshTokenAsynFunc();
+        }
+      }, 1000);
+      const stopInterval = setTimeout(() => {
+        clearInterval(intervalId);
+      }, 15 * 60 * 1000);
+      return () => {
+        clearInterval(intervalId);
+        clearTimeout(stopInterval);
+      };
+    }
+  }, [startListener, localStorageValue]);
+
+  const refreshTokenAsynFunc = async () => {
+    try {
+      await refresh();
+      setSuccess(true);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (success) {
+      console.log("success");
+      navigate(from, { replace: true });
+    }
+  }, [success]);
+  console.log(startListener);
+  console.log(localStorageValue);
   return (
     <>
       {success ? (
@@ -182,6 +236,7 @@ const Register = () => {
               {errMsg}
               <FontAwesomeIcon icon={faXmark} />
             </p>
+
             <form onSubmit={register} className="register-form">
               <div className="name-input-container">
                 <div className="input-container">

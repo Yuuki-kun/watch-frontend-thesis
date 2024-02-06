@@ -3,7 +3,7 @@ import useAuth from "./useAuth";
 import { LOGOUT_URL } from "../config/rest-api";
 import usePrivateRequest from "./usePrivateRequest";
 const useLogout = () => {
-  const { auth, setAuth } = useAuth();
+  const { auth, setAuth, setPersist } = useAuth();
   const navigate = useNavigate();
   const axiosPrivate = usePrivateRequest();
   const logout = async () => {
@@ -12,6 +12,8 @@ const useLogout = () => {
       setAuth({});
       localStorage.removeItem("refreshToken");
       alert("logout success");
+      setPersist(false);
+      localStorage.setItem("persist", false);
       navigate("/");
     } catch (error) {
       console.error(error);

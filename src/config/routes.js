@@ -1,6 +1,7 @@
 import React from "react";
 import TestPage from "../pages/TestPage";
 
+const ActiveAccount = React.lazy(() => import("../pages/ActiveAccountPage"));
 const Login = React.lazy(() => import("../components/login/Login"));
 const Home = React.lazy(() => import("../pages/Home"));
 const Register = React.lazy(() => import("../components/register/Register"));
@@ -9,6 +10,7 @@ const UserInfo = React.lazy(() => import("../components/user-info/UserInfo"));
 const DashBoard = React.lazy(() =>
   import("../components/admin/dashboard/DashBoard")
 );
+
 const Users = React.lazy(() => import("../components/admin/Users"));
 
 export const publicRoutes = [
@@ -29,6 +31,7 @@ export const publicRoutesNoLayout = [
     path: "register2",
     component: Register2,
   },
+  { path: "active-account/:token", component: ActiveAccount },
 ];
 
 export const userPrivateRoutes = [{ path: "user-info", component: UserInfo }];
