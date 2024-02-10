@@ -46,46 +46,48 @@ const BannerCarousel = () => {
   };
 
   return (
-    <Carousel
-      //   onChange={(idx) => handleSlideChange(idx)}
-      autoPlay={true}
-      infiniteLoop={true}
-      emulateTouch={true}
-      renderArrowPrev={renderArrowPrev}
-      renderArrowNext={renderArrowNext}
-      showThumbs={false}
-      interval={4000}
-    >
-      <div>
-        <img
-          src="./images/banner-imgs/brand4.jpeg"
-          alt="banner1"
-          className="img-fluid"
-        />
-      </div>
+    <section>
+      <Carousel
+        //   onChange={(idx) => handleSlideChange(idx)}
+        autoPlay={true}
+        infiniteLoop={true}
+        // emulateTouch={true}
+        renderArrowPrev={renderArrowPrev}
+        renderArrowNext={renderArrowNext}
+        showThumbs={false}
+        interval={4000}
+      >
+        <div>
+          <img
+            src="./images/banner-imgs/brand4.jpeg"
+            alt="banner1"
+            className="img-fluid"
+          />
+        </div>
 
-      <div>
-        <img
-          src="./images/banner-imgs/brand5.jpg"
-          alt="banner2"
-          className="img-fluid"
-        />
-      </div>
-      <div>
-        <img
-          src="./images/banner-imgs/brand6.jpeg"
-          alt="banner3"
-          className="img-fluid"
-        />
-      </div>
-      <div>
-        <img
-          src="./images/banner-imgs/brand7.jpeg"
-          alt="banner4"
-          className="img-fluid"
-        />
-      </div>
-    </Carousel>
+        <div>
+          <img
+            src="./images/banner-imgs/brand5.jpg"
+            alt="banner2"
+            className="img-fluid"
+          />
+        </div>
+        <div>
+          <img
+            src="./images/banner-imgs/brand6.jpeg"
+            alt="banner3"
+            className="img-fluid"
+          />
+        </div>
+        <div>
+          <img
+            src="./images/banner-imgs/brand7.jpeg"
+            alt="banner4"
+            className="img-fluid"
+          />
+        </div>
+      </Carousel>
+    </section>
   );
 };
 

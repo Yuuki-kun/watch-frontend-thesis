@@ -134,7 +134,13 @@ const TestNav = () => {
             </Link>
           </li>
           <li className="hide-on-mobile">
-            <a href="#"> Home </a>
+            <a href="#"> Men </a>
+          </li>
+          <li className="hide-on-mobile">
+            <a href="#"> Women </a>
+          </li>
+          <li className="hide-on-mobile">
+            <a href="#"> Collection </a>
           </li>
           <li className="hide-on-mobile">
             <a href="#"> Blogs </a>

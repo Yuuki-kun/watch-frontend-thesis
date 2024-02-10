@@ -2,7 +2,8 @@ import React from "react";
 import useLogout from "../../hooks/useLogout";
 import { Link } from "react-router-dom";
 import "./home.css";
-import BannerCarousel from "./BannerCarousel";
+import BannerCarousel from "../../components/home/BannerCarousel";
+import Brands from "../../components/home/Brands";
 const Home = () => {
   const logout = useLogout();
   const signout = async () => {
@@ -17,6 +18,7 @@ const Home = () => {
         <button onClick={signout}>Sign Out</button>
       </div> */}
       <BannerCarousel />
+      <Brands />
     </div>
   );
 };
