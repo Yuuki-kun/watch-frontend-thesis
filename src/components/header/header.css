@@ -16,6 +16,7 @@ nav {
   display: flex;
   /* position: fixed; */
   width: 100%;
+  z-index: 1000;
 }
 
 nav.nav-shadow-scroll {
@@ -168,6 +169,7 @@ nav li:first-child {
   right: 0;
   transition: all 0.2s ease;
   overflow: hidden;
+  z-index: 1000;
 }
 
 .search-container.active-search {
@@ -204,6 +206,7 @@ nav li:first-child {
   transition: all 0.3s ease;
   width: 200px;
   box-shadow: 2px 4px 7px 2px rgba(0, 0, 0, 0.1);
+  z-index: 1001;
 }
 
 .dropdown-menu::after {
@@ -246,6 +249,7 @@ nav li:first-child {
 }
 
 .product-link-dropdown-content {
+  z-index: 1001;
   cursor: pointer;
   position: absolute;
   top: 2.8rem;

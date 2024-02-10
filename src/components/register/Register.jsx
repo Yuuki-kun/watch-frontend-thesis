@@ -12,6 +12,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faBan } from "@fortawesome/free-solid-svg-icons";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import useRefreshToken from "../../hooks/useRefreshToken";
+import SockJS from "sockjs-client";
 const Register = () => {
   const refresh = useRefreshToken();
 
@@ -220,6 +221,7 @@ const Register = () => {
   }, [success]);
   console.log(startListener);
   console.log(localStorageValue);
+
   return (
     <>
       {success ? (

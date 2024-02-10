@@ -1,0 +1,158 @@
+.home-section {
+    padding-top: 0px;
+    /* background-color: #000; */
+}
+
+/* .banner {
+    height: 650px;
+
+} */
+
+/* .slider-wrapper {
+    height: 650px;
+} */
+
+.video {
+    width: 100%;
+    height: 100%;
+}
+
+.arrow-prev-control,
+.arrow-next-control {
+    position: absolute;
+    z-index: 999;
+    background-color: transparent;
+    border: none;
+    width: auto;
+    height: auto;
+}
+
+.arrow-prev-control .icon,
+.arrow-next-control .icon {
+    font-size: 2rem;
+}
+
+.arrow-prev-control {
+    top: 50%;
+    left: 0;
+}
+
+.arrow-next-control {
+    right: 0;
+    top: 50%;
+}
+
+#product-section-container {
+    margin-top: 1rem;
+}
+
+#product-section-container .content {
+    text-align: center;
+}
+
+.display-product-area .product-menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    font-size: 14px;
+}
+
+.carousel-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.display-product-content {
+    width: 90vw;
+
+}
+
+.product-slide-0 {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    margin-top: 1rem;
+    height: 864px;
+}
+
+.product-slide-0 .left-col,
+.right-col {
+    width: 50%;
+    height: 864px;
+}
+
+.right-col .product-item {
+    height: 432px;
+    transition: transform 0.3s ease;
+    overflow: hidden;
+}
+
+.right-col .product-item:hover {
+    transform: scale(1.05);
+}
+
+.product-slide-0 .img-product,
+.product-item {}
+
+.product-slide-0 .img-product {
+    border-radius: 1.38888889vw;
+    transition: transform 0.3s ease;
+}
+
+.product-slide-0 .img-product:hover {
+    transform: scale(1.1);
+}
+
+.left-col,
+.right-col {
+    overflow: hidden;
+    border-radius: 1.38888889vw;
+}
+
+.product-slide-0 {
+    position: relative;
+}
+
+.new-notify {
+    position: absolute;
+    background-color: transparent;
+    z-index: 10000;
+    width: 52px;
+    height: 40px;
+    top: 40px;
+    left: 40px;
+    color: #fff;
+    font-weight: 700;
+    padding: 0;
+    border-radius: 50%;
+}
+
+.new-notify span {
+    line-height: 1.11111111vw;
+    background-color: #00838f;
+    padding: .13888889vw .41666667vw;
+    height: 1.38888889vw;
+    border-radius: .69444444vw;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.56);
+}
+
+.announced-deal {
+    position: absolute;
+    top: 43rem;
+    color: #fff;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.56);
+    font-size: 30px;
+    left: 17%;
+    line-height: 1.11111111vw;
+}
+
+.deal-off-content {
+    position: absolute;
+    top: 49rem;
+    color: #fff;
+    left: 15%;
+    font-weight: 300;
+    font-size: 16px;
+}

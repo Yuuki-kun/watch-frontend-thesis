@@ -3,7 +3,7 @@ import TestPage from "../pages/TestPage";
 
 const ActiveAccount = React.lazy(() => import("../pages/ActiveAccountPage"));
 const Login = React.lazy(() => import("../components/login/Login"));
-const Home = React.lazy(() => import("../pages/Home"));
+const Home = React.lazy(() => import("../pages/home/Home"));
 const Register = React.lazy(() => import("../components/register/Register"));
 const Register2 = React.lazy(() => import("../components/register/Register2"));
 const UserInfo = React.lazy(() => import("../components/user-info/UserInfo"));
