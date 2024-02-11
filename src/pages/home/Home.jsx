@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import "./home.css";
 import BannerCarousel from "../../components/home/BannerCarousel";
 import Brands from "../../components/home/Brands";
+import BestSellers from "../../components/home/BestSellers";
 const Home = () => {
   const logout = useLogout();
   const signout = async () => {
@@ -19,6 +20,7 @@ const Home = () => {
       </div> */}
       <BannerCarousel />
       <Brands />
+      <BestSellers />
     </div>
   );
 };
