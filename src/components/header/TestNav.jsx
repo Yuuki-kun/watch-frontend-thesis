@@ -236,20 +236,20 @@ const TestNav = () => {
             </button>
           </li>
         </ul>
+        <div className={`search-container`}>
+          <div className="input-container">
+            <input ref={inputSearchRef} type="text" />
+          </div>
+          <div className="recommend-category">
+            recommend links
+            <ul>
+              <li>login</li>
+              <li>a</li>
+              <li>a</li>
+            </ul>
+          </div>
+        </div>
       </nav>
-      <div className={`search-container`}>
-        <div className="input-container">
-          <input ref={inputSearchRef} type="text" />
-        </div>
-        <div className="recommend-category">
-          recommend links
-          <ul>
-            <li>login</li>
-            <li>a</li>
-            <li>a</li>
-          </ul>
-        </div>
-      </div>
     </>
   );
 };

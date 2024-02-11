@@ -2,11 +2,18 @@
   position: relative;
 }
 
+body {
+  height: 200vh;
+}
+
 .nav-s.active {
   position: fixed;
   top: 0;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: all 0.5s ease;
+  height: 45px;
+  font-size: .9rem;
+  background-color: rgba(255, 255, 255, 0.9);
 }
 
 nav {
@@ -17,6 +24,7 @@ nav {
   /* position: fixed; */
   width: 100%;
   z-index: 1000;
+  position: relative;
 }
 
 nav.nav-shadow-scroll {
@@ -38,7 +46,7 @@ nav ul {
 }
 
 nav li {
-  height: 50px;
+  height: 70%;
   padding-right: 0.5rem;
 }
 
@@ -159,13 +167,14 @@ nav li:first-child {
   align-items: flex-start;
   /* padding: 1rem 2rem; */
   display: block;
-  position: fixed;
+  position: absolute;
   background-color: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(50px);
   box-shadow: -10px 0 10px rgba(38, 38, 38, 0.1);
   width: 0;
   height: 320px;
-  top: 120px;
+  /* top: 120px; */
+  top: 100%;
   right: 0;
   transition: all 0.2s ease;
   overflow: hidden;
@@ -188,7 +197,7 @@ nav li:first-child {
 }
 
 .search-container.scrolled-search-active {
-  top: 80px;
+  top: 45px;
 }
 
 .menu-container {
