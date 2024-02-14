@@ -1,25 +1,10 @@
 import React from "react";
-import BestSellerItems from "./BestSellerItems";
 import { FcNext, FcPrevious } from "react-icons/fc";
+import BestSellerItems from "./BestSellerItems";
 import Slider from "react-slick";
 
-const BestSellers = () => {
-  //best sellers img
-  const bestSellersProducts = [
-    {
-      name: "Boss Here Sport Lux Watch",
-      img: "https://d1rkccsb0jf1bk.cloudfront.net/products/100032735/main/medium/1513767_LRG_rgb_Web.jpg",
-      price: 399.0,
-      discountPercent: 10,
-      timeLeaf: 1920,
-    },
-    {
-      name: "Mens Armani Exchange Watch AX2103",
-      img: "https://d1rkccsb0jf1bk.cloudfront.net/products/99953110/main/medium/AX2103_main.jpg",
-      price: 169.0,
-      discountPercent: 12,
-      timeLeaf: 1833,
-    },
+const Sale = () => {
+  const saleItems = [
     {
       name: "Vivienne Westwood Exclusive Ladies Silver Seymour Watch",
       img: "https://d1rkccsb0jf1bk.cloudfront.net/products/100052014/main/medium/VV240SLBK.jpg",
@@ -40,6 +25,20 @@ const BestSellers = () => {
       price: 85.0,
       discountPercent: 27,
       timeLeaf: 2400,
+    },
+    {
+      name: "Michael Kors Darci Watch Rose Gold MK3192",
+      img: "https://d1rkccsb0jf1bk.cloudfront.net/products/99955046/main/medium/MK3192main.jpg",
+      price: 239.0,
+      discountPercent: 55,
+      timeLeaf: 2115,
+    },
+    {
+      name: "Mens Lacoste Watch",
+      img: "https://d1rkccsb0jf1bk.cloudfront.net/products/100043629/main/medium/2011050_1.jpg",
+      price: 139.0,
+      discountPercent: 60,
+      timeLeaf: 1900,
     },
   ];
   const NextArrow = (props) => {
@@ -73,14 +72,15 @@ const BestSellers = () => {
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
   };
+  //im using the same css styles with best seller items, change later
   return (
     <section className="best-sellers-section">
       <div className="best-sellers-container">
-        <div className="best-sellers-title">BestSellers</div>
+        <div className="best-sellers-title">NewIn</div>
         <div className="best-sellers-products">
           <Slider {...settings}>
-            {bestSellersProducts != null &&
-              bestSellersProducts.map((watch, idx) => {
+            {saleItems != null &&
+              saleItems.map((watch, idx) => {
                 return <BestSellerItems key={idx} watchItem={watch} />;
               })}
           </Slider>
@@ -90,4 +90,4 @@ const BestSellers = () => {
   );
 };
 
-export default BestSellers;
+export default Sale;

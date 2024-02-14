@@ -5,6 +5,7 @@ import "./home.css";
 import BannerCarousel from "../../components/home/BannerCarousel";
 import Brands from "../../components/home/Brands";
 import BestSellers from "../../components/home/BestSellers";
+import TopProductDisplay from "../../components/home/TopProductDisplay";
 const Home = () => {
   const logout = useLogout();
   const signout = async () => {
@@ -18,9 +19,11 @@ const Home = () => {
       <div className="flexGrow">
         <button onClick={signout}>Sign Out</button>
       </div> */}
+
       <BannerCarousel />
       <Brands />
-      <BestSellers />
+      {/* <BestSellers /> */}
+      <TopProductDisplay />
     </div>
   );
 };

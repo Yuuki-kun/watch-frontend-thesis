@@ -173,9 +173,9 @@ const TestNav = () => {
             </button>
           </li>
           <li className="hide-on-mobile">
-            <a href="#">
+            <Link to={"cart"}>
               <AiOutlineShoppingCart className="navbar-icon" />
-            </a>
+            </Link>
           </li>
           <li className="hide-on-mobile">
             <div className="menu-container h-100">
