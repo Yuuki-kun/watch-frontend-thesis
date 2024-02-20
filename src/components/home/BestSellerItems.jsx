@@ -4,13 +4,15 @@ import { Link } from "react-router-dom";
 import Slider from "react-slick";
 
 const BestSellerItems = ({ watchItem }) => {
-  console.log(watchItem);
+  // console.log(watchItem);
   //   props.map((p, i) => {
   //     console.log(i + " " + p.name);
   //   });
   const targetTime = new Date();
-  targetTime.setHours(watchItem.timeLeaf / 100);
-  targetTime.setMinutes(watchItem.timeLeaf % 100);
+  // targetTime.setHours(watchItem.timeLeaf / 100);
+  // targetTime.setMinutes(watchItem.timeLeaf % 100);
+  targetTime.setHours(3000 / 100);
+  targetTime.setMinutes(3000 % 100);
   targetTime.setSeconds(0);
 
   const calculateTimeRemaining = () => {
@@ -31,12 +33,13 @@ const BestSellerItems = ({ watchItem }) => {
     }, 1000);
     return () => clearInterval(timerInterval);
   }, []);
+
   return (
-    <Link className="card">
+    <Link className="card" to={`/products/${watchItem.reference}`}>
       <div className="product">
         <div className="img">
           <img
-            src={watchItem != null ? watchItem.img : "img"}
+            src={watchItem != null ? watchItem.images[0].image : "img"}
             alt="img"
             className="img-fluid"
           />
@@ -48,17 +51,18 @@ const BestSellerItems = ({ watchItem }) => {
           <div className="price">
             <div className="default-price">
               {watchItem != null &&
-                (Number(watchItem.price) * 1000).toLocaleString()}
+                (Number(watchItem.defaultPrices) * 1000000).toLocaleString()}
               đ
             </div>
             <div className="new-discount-price">
               {watchItem != null &&
                 (
-                  (Number(watchItem.price) *
-                    1000 *
-                    Number(100 - watchItem.discountPercent)) /
+                  (Number(watchItem.defaultPrices) * 1000 * Number(100 - 20)) /
                   100
-                ).toLocaleString()}
+                )
+                  // Number(100 - watchItem.discountPercent)) /100
+
+                  .toLocaleString()}
               đ
               <div>
                 <span style={{ color: "black", marginLeft: "8px" }}>in</span>

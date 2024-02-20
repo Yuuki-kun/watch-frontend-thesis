@@ -1,12 +1,13 @@
-
-.regis-page-container{
+.regis-page-container {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background: rgba(230, 231, 247, 0.5); /* Đặt độ trong ở giá trị cuối cùng (ở đây là 0.5) */
+    background: rgba(230, 231, 247, 0.5);
+    /* Đặt độ trong ở giá trị cuối cùng (ở đây là 0.5) */
 }
-.register-container{
+
+.register-container {
     background: #fff;
     z-index: 100;
     height: auto;
@@ -18,18 +19,19 @@
     border: 1px solid transparent;
     padding: 1rem 1.5rem;
     border-radius: 8px;
-    box-shadow: 3px 3px 11px 1px rgba(0,0,0,0.6)
+    box-shadow: 3px 3px 11px 1px rgba(0, 0, 0, 0.6)
 }
 
 
-.regis-head{
+.regis-head {
     text-align: center;
 }
-.regis-head p{
+
+.regis-head p {
     margin-bottom: 0;
 }
 
-.regis-head-bottom-in-line{
+.regis-head-bottom-in-line {
     height: .065rem;
     width: 100%;
     background-color: rgb(255, 255, 255);
@@ -37,26 +39,27 @@
     box-shadow: 0 0 2px 1px rgba(12, 6, 55, 0.3);
     border-radius: 60%;
 }
-.regis-head h1{
+
+.regis-head h1 {
     font-size: 1.8rem;
     line-height: 3.2rem;
 }
-    
-.register-form{
+
+.register-form {
     max-width: 100%;
     height: 70%;
 }
 
-.name-input-container{
+.name-input-container {
     display: flex;
     gap: .5rem;
 }
 
-.form-label{
+.form-label {
     margin-bottom: 0.25rem !important;
 }
 
-.span-input{
+.span-input {
     width: 100%;
     position: relative;
     display: flex;
@@ -64,7 +67,7 @@
 }
 
 
-.hint-container{
+.hint-container {
     display: flex;
     position: absolute;
     background-color: transparent;
@@ -75,14 +78,15 @@
     justify-content: center;
 }
 
-.password-eye{
+.password-eye {
     background-color: transparent;
-    :hover{
+
+    :hover {
         cursor: pointer;
     }
 }
 
-.valid{
+.valid {
     position: relative;
     opacity: 1;
     background-color: transparent;
@@ -90,12 +94,14 @@
     margin-left: .5rem;
 
 }
-.hint-hide{
+
+.hint-hide {
     position: absolute;
     right: -3rem;
     display: none;
 }
-.in-valid{
+
+.in-valid {
     position: relative;
     opacity: 1;
     background-color: transparent;
@@ -103,20 +109,21 @@
     margin-left: .5rem;
 }
 
-.form-control{
-    padding: 0.25rem 0.5rem !important;  
+.form-control {
+    padding: 0.25rem 0.5rem !important;
 
 }
-.form-control:focus{
+
+.form-control:focus {
     border-color: #2e82ff !important;
 }
 
-.input-container{
+.input-container {
     position: relative;
     margin-bottom: .65rem;
 }
 
-.form-control.active{
+.form-control.active {
     border: 1px solid #ff4d4f !important;
 }
 
@@ -144,16 +151,16 @@
     z-index: -999;
 }
 
-.offscreen.confirmnote{
+.offscreen.confirmnote {
     position: absolute;
 }
 
-.matchPwdContainer{
+.matchPwdContainer {
     display: flex;
     flex-wrap: wrap;
 }
 
-.instructions > svg {
+.instructions>svg {
     margin-right: 0.25rem;
 }
 
@@ -180,14 +187,14 @@
     display: inline-block;
 }
 
-.signup-btn-container{
+.signup-btn-container {
     position: relative;
     letter-spacing: .175rem;
     align-items: center;
     text-align: center;
 }
 
-.sign-up-btn{
+.sign-up-btn {
     border: .15rem solid rgb(158, 158, 158);
     border-radius: 5px;
     line-height: 1.6rem;
@@ -196,19 +203,48 @@
     font-weight: 700;
     cursor: pointer;
     display: inline-block;
-    background-color: #081b87;
     color: #ffffff;
-    opacity: 1;
+    position: relative;
+    overflow: hidden;
+    background: transparent;
 }
-.sign-up-btn:disabled{
+
+.sign-up-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    background: linear-gradient(45deg, #5c86c5, #3520bc, #aac3df, #6600ff);
+    background-size: 400% 400%;
+    animation: gradientBg 6s linear infinite;
+    transition: background-position 0.5s;
+    background-position: 0% 50%;
+}
+
+@keyframes gradientBg {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+
+.sign-up-btn:disabled {
     opacity: .5;
     color: #47474a;
 }
-.sign-up-btn:focus{
-    background-color: rgb(16, 12, 80);
+
+.sign-up-btn:disabled::before {
+    background: #3520bc;
 }
 
-.banned-icon{
+.banned-icon {
     position: absolute;
     top: 50%;
     left: 50%;

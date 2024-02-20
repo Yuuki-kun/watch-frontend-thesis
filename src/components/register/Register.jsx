@@ -22,6 +22,7 @@ const Register = () => {
     email: "",
     password: "",
     role: "USER",
+    phoneNumber: "",
   });
 
   const handleChange = (e) => {
@@ -148,7 +149,7 @@ const Register = () => {
     if (!error?.response) {
       setErrMsg("No server response");
     } else if (error.response?.status === 409) {
-      setErrMsg("Username Taken");
+      setErrMsg(error.response.data.message);
     } else {
       setErrMsg("Registration failed");
     }
@@ -185,13 +186,13 @@ const Register = () => {
 
   useEffect(() => {
     if (startListener) {
-      console.log("get token");
+      localStorage.setItem("from", from);
+      //set some user's prev info
       const intervalId = setInterval(() => {
         const newValue = localStorage.getItem("refreshToken");
         console.log("waiting");
         if (newValue !== localStorageValue) {
-          setLocalStorageValue(newValue);
-          refreshTokenAsynFunc();
+          // window.close();
         }
       }, 1000);
       const stopInterval = setTimeout(() => {
@@ -396,6 +397,33 @@ const Register = () => {
                   4 to 24 characters. Must begin with a letter. Letters,
                   numbers, underscores, hyphens allowed.
                 </p>
+              </div>
+
+              <div className="input-container">
+                <label htmlFor="phoneNumber" className="form-label">
+                  Phone Number:
+                </label>
+                <span className="span-input">
+                  <input
+                    type="text"
+                    name="phoneNumber"
+                    id="phoneNumber"
+                    value={registerUser.phoneNumber}
+                    onChange={handleChange}
+                    autoComplete="off"
+                    required
+                    // aria-invalid={validEmail ? "false" : "true"}
+                    // aria-describedby="eidnote"
+                    // onFocus={() => setEmailFocus(true)}
+                    // onBlur={() => setEmailFocus(false)}
+                    // className={
+                    //   registerUser.email && !validEmail
+                    //     ? "form-control active"
+                    //     : "form-control"
+                    // }
+                    className="form-control"
+                  />
+                </span>
               </div>
 
               <div className="input-container">

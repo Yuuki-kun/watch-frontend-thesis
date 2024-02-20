@@ -53,7 +53,13 @@ const ActiveAccountPage = () => {
   }, []);
 
   return (
-    <>{success ? <Navigate to={from} replace /> : <div>Active Page</div>}</>
+    <>
+      {success ? (
+        <Navigate to={localStorage.getItem("from") || "/"} replace />
+      ) : (
+        <div>Active Page</div>
+      )}
+    </>
   );
 };
 

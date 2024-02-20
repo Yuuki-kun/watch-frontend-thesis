@@ -1,10 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import BestSellerItems from "./BestSellerItems";
 import { FcNext, FcPrevious } from "react-icons/fc";
 import Slider from "react-slick";
+import axios from "../../api/axios";
 
 const BestSellers = () => {
   //best sellers img
+  const [bestSellerItems, setBestSellerItems] = useState([]);
+  const getBestSellerProducts = async () => {
+    try {
+      const response = await axios.get("/products");
+      if (response?.data) {
+        const tripledArray = [];
+        for (let i = 0; i < response.data.length; i += 2) {
+          for (let j = 0; j < 3; j++) {
+            if (
+              response.data[i] !== undefined &&
+              response.data[i + 1] !== undefined
+            ) {
+              tripledArray.push(response.data[i]);
+              tripledArray.push(response.data[i + 1]);
+            }
+          }
+        }
+        setBestSellerItems(tripledArray);
+      }
+      console.log(response);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    getBestSellerProducts();
+  }, []);
+
   const bestSellersProducts = [
     {
       name: "Boss Here Sport Lux Watch",
@@ -79,8 +109,8 @@ const BestSellers = () => {
         <div className="best-sellers-title">BestSellers</div>
         <div className="best-sellers-products">
           <Slider {...settings}>
-            {bestSellersProducts != null &&
-              bestSellersProducts.map((watch, idx) => {
+            {bestSellerItems != null &&
+              bestSellerItems.map((watch, idx) => {
                 return <BestSellerItems key={idx} watchItem={watch} />;
               })}
           </Slider>

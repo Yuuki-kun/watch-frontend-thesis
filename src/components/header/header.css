@@ -2,10 +2,6 @@
   position: relative;
 }
 
-body {
-  height: 200vh;
-}
-
 .nav-s.active {
   position: fixed;
   top: 0;

@@ -1,5 +1,4 @@
 import React from "react";
-import useLogout from "../../hooks/useLogout";
 import { Link } from "react-router-dom";
 import "./home.css";
 import BannerCarousel from "../../components/home/BannerCarousel";
@@ -7,10 +6,6 @@ import Brands from "../../components/home/Brands";
 import BestSellers from "../../components/home/BestSellers";
 import TopProductDisplay from "../../components/home/TopProductDisplay";
 const Home = () => {
-  const logout = useLogout();
-  const signout = async () => {
-    await logout();
-  };
   return (
     <div className="home-section">
       {/* <Link to="/admin">Go to the Admin page</Link>

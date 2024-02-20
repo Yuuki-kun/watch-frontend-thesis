@@ -7,6 +7,7 @@ import { FaRegUser } from "react-icons/fa6";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import useLogout from "../../hooks/useLogout";
 
 const TestNav = () => {
   const { auth } = useAuth();
@@ -87,6 +88,12 @@ const TestNav = () => {
     }
   }, [showSearch]);
   console.log("auth=" + JSON.stringify(auth));
+
+  const logout = useLogout();
+  const signout = async () => {
+    await logout();
+  };
+
   return (
     <>
       <nav className="nav-s">
@@ -200,6 +207,10 @@ const TestNav = () => {
                 <ul className="dropdown-list">
                   {auth?.email ? (
                     <>
+                      <li className="dropdown-item">
+                        <button onClick={() => signout()}>logout</button>
+                      </li>
+
                       <li className="dropdown-item">
                         <p>item 1</p>
                       </li>

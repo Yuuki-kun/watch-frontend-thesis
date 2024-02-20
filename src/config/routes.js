@@ -12,11 +12,13 @@ const DashBoard = React.lazy(() =>
 );
 const Cart = React.lazy(() => import("../components/cart/Cart"));
 const Users = React.lazy(() => import("../components/admin/Users"));
+const ProductView = React.lazy(() => import("../pages/products/ProductView"));
 
 export const publicRoutes = [
   { path: "/", component: Home },
   { path: "test", component: TestPage },
   { path: "cart", component: Cart },
+  { path: "products/:reference", component: ProductView },
 ];
 
 export const publicRoutesNoLayout = [
