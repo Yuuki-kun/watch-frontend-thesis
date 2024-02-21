@@ -19,6 +19,7 @@
     "react-router-dom": "^6.21.3",
     "react-scripts": "5.0.1",
     "react-slick": "^0.30.1",
+    "react-stars": "^2.2.5",
     "slick-carousel": "^1.8.1",
     "sockjs-client": "^1.6.1",
     "stompjs": "^2.3.3",
