@@ -35,7 +35,11 @@ const BestSellerItems = ({ watchItem }) => {
   }, []);
 
   return (
-    <Link className="card" to={`/products/${watchItem.reference}`}>
+    <Link
+      className="card"
+      to={`/products/${watchItem.reference}`}
+      target="_top"
+    >
       <div className="product">
         <div className="img">
           <img

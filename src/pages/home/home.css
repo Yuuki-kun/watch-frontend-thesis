@@ -133,7 +133,7 @@
 
 .product .img img {
     max-height: 280px;
-    width: 240px;
+    max-width: 240px;
 }
 
 .card:hover .product {
