@@ -218,3 +218,34 @@ input[type=number] {
 .checkout-btn:active {
     background-color: #953900;
 }
+
+.qty-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    border: 2px solid transparent;
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+.qty-spinner {
+    border-width: 4px;
+    width: 30px;
+    height: 30px;
+    border-top-color: #4392e7;
+    border-bottom-color: #b7b7b7;
+
+}

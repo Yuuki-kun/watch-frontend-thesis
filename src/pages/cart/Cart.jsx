@@ -5,7 +5,10 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 
 import "./cart.css";
 import useCart from "../../hooks/useCart";
-import { getCartItemsService } from "../../api/services/cartService";
+import {
+  controlQtyService,
+  getCartItemsService,
+} from "../../api/services/cartService";
 import DeleteProductModal from "../../components/modal/DeleteProductModal";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 const Cart = () => {
@@ -60,6 +63,21 @@ const Cart = () => {
         <span>Đã xóa!</span>
       </div>
     );
+
+  const [isChangingQty, setIsChangingQty] = useState(false);
+
+  const updateQty = async (itemId, method) => {
+    try {
+      setIsChangingQty(true);
+      const response = await controlQtyService(auth?.cartId, itemId, method);
+      setTimeout(() => {
+        setIsChangingQty(false);
+      }, 200);
+      setCart(response);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <section className="cart-container-section ">
@@ -142,18 +160,32 @@ const Cart = () => {
                     </td>
 
                     <td className="align-middle">
-                      <p>
-                        <div className="quantity-control">
-                          <button className="de-button">-</button>
-                          <input
-                            id="quantityInput"
-                            className="input-quantity"
-                            type="number"
-                            value={item.quantity}
-                          />
-                          <button className="incr-button">+</button>
-                        </div>
-                      </p>
+                      {/* <p> */}
+                      <div className="quantity-control position-relative">
+                        <div
+                          className={`${isChangingQty ? "qty-spinner" : ""}`}
+                        ></div>
+
+                        <button
+                          className="de-button"
+                          onClick={() => updateQty(item.id, "decrease")}
+                        >
+                          -
+                        </button>
+                        <input
+                          id="quantityInput"
+                          className="input-quantity"
+                          type="number"
+                          value={item.quantity}
+                        />
+                        <button
+                          className="incr-button"
+                          onClick={() => updateQty(item.id, "increase")}
+                        >
+                          +
+                        </button>
+                      </div>
+                      {/* </p> */}
                     </td>
                     <td className="align-middle">
                       <div
