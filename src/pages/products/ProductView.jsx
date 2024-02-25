@@ -277,15 +277,11 @@ const ProductView = () => {
           watchDetails.price,
           1
         );
-        // response && setIsAddingToBag(false);
         setTimeout(() => {
           response && setIsAddingToBag(false);
           notify();
         }, 500);
-        // Handle response here if needed
-      } catch (error) {
-        // Handle specific errors if needed
-      }
+      } catch (error) {}
     } else {
       console.error("auth.cartId or watchDetails.id is undefined.");
     }

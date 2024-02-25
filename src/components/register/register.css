@@ -4,7 +4,6 @@
     justify-content: center;
     height: 100vh;
     background: rgba(230, 231, 247, 0.5);
-    /* Đặt độ trong ở giá trị cuối cùng (ở đây là 0.5) */
 }
 
 .register-container {
