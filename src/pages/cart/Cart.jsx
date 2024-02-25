@@ -32,27 +32,29 @@ const Cart = () => {
       }
     }
   }, [auth, setCart]);
-
+  console.log(cart.length);
   return (
     <section className="cart-container-section ">
       <div className="cart-container container">
         <h4>My Shopping Cart ({cart?.length})</h4>
-        <div className="cart-select-info">
-          <button className="select-all-btn">Chọn tất cả</button>
-          <div>
-            <div style={{ color: "#fff" }}>{1} items selected</div>
+        {cart && cart.length > 0 && (
+          <div className="cart-select-info">
+            <button className="select-all-btn">Chọn tất cả</button>
+            <div>
+              <div style={{ color: "#fff" }}>{1} items selected</div>
+            </div>
+            <div style={{ marginLeft: "auto" }}>
+              <span style={{ color: "#fff", fontWeight: "bold" }}>
+                Tổng: 100,000,000đ
+              </span>
+              <button className="checkout-btn">Thanh toán/Mua hàng</button>
+            </div>
           </div>
-          <div style={{ marginLeft: "auto" }}>
-            <span style={{ color: "#fff", fontWeight: "bold" }}>
-              Tổng: 100,000,000đ
-            </span>
-            <button className="checkout-btn">Thanh toán/Mua hàng</button>
-          </div>
-        </div>
+        )}
         {/* <div className="line-container">
           <span className="line"></span>
         </div> */}
-        {!cart ? (
+        {cart && cart.length <= 0 ? (
           <div className="empty-cart-container">
             <FaCartPlus className="empty-cart-icon" />
             <h3>Your Cart Is Currently Empty</h3>

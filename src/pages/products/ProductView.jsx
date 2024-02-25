@@ -15,14 +15,26 @@ import { FaHeart } from "react-icons/fa";
 
 import BestSellerItems from "../../components/home/BestSellerItems";
 import Slider from "react-slick";
+import { addToBagService } from "../../api/services/cartService";
+import useAuth from "../../hooks/useAuth";
+import {
+  Bounce,
+  Flip,
+  Slide,
+  ToastContainer,
+  Zoom,
+  toast,
+} from "react-toastify";
 
 const ProductView = () => {
+  const { auth } = useAuth();
   const { reference } = useParams();
   const [watchDetails, setWatchDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [sizeSelects, setSizeSelects] = useState([]);
   const [selectedSize, setSelectedSize] = useState("No size adjusting");
   const [isToggleDesc, setIsToggleDesc] = useState([]);
+  const [isAddingToBag, setIsAddingToBag] = useState(false);
 
   const [ratingStarsCount, setRatingStarsCount] = useState({
     1: 0,
@@ -240,6 +252,45 @@ const ProductView = () => {
     setHeartStates(updatedStates);
   };
 
+  console.log(auth);
+
+  const notify = () =>
+    toast.success(
+      <div>
+        <img
+          src={watchDetails.images[0].image}
+          alt=""
+          className="notify-watch-img"
+        />
+        <span>Đã thêm vào giỏ hàng!</span>
+      </div>
+    );
+
+  const addToBag = async () => {
+    setIsAddingToBag(true);
+    // Check if auth and watchDetails are defined
+    if (auth?.cartId && watchDetails?.id) {
+      try {
+        const response = await addToBagService(
+          auth.cartId,
+          watchDetails.id,
+          watchDetails.price,
+          1
+        );
+        // response && setIsAddingToBag(false);
+        setTimeout(() => {
+          response && setIsAddingToBag(false);
+          notify();
+        }, 500);
+        // Handle response here if needed
+      } catch (error) {
+        // Handle specific errors if needed
+      }
+    } else {
+      console.error("auth.cartId or watchDetails.id is undefined.");
+    }
+  };
+
   return (
     <>
       {loading ? (
@@ -356,7 +407,28 @@ const ProductView = () => {
                       ))}
                     </select>
                   )}
-                  <button className="pv-add-to-cart-btn">Add to bag</button>
+                  <div>
+                    <ToastContainer
+                      position="top-right"
+                      autoClose={2000}
+                      hideProgressBar={true}
+                      newestOnTop={true}
+                      closeOnClick
+                      rtl={false}
+                      draggable
+                      theme="dark"
+                      transition={Bounce}
+                      success
+                    />
+                  </div>
+                  <button className="pv-add-to-cart-btn" onClick={addToBag}>
+                    <div className={`${isAddingToBag ? "spinner" : ""}`}></div>
+                    <span style={{ color: isAddingToBag ? "#bbb" : "#fff" }}>
+                      {isAddingToBag ? "Adding To Your Bag..." : "Add To Bag"}
+                    </span>
+
+                    {/* {isAddingToBag ? "Adding to your bag..." : "Add to bag"} */}
+                  </button>
                 </div>
                 <div className="line-container">
                   <span className="line"></span>

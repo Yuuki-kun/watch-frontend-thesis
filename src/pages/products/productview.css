@@ -234,6 +234,7 @@
     color: #fcfcfc;
     font-size: 1.2rem;
     border-radius: 2px;
+    position: relative;
 }
 
 .pv-add-to-cart-btn:hover {
@@ -530,4 +531,45 @@
 
     margin-top: 1rem;
     text-align: justify;
+}
+
+.spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    border: 2px solid transparent;
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* Optional: Adjust spinner size and colors */
+.spinner {
+    border-width: 4px;
+    width: 30px;
+    height: 30px;
+    border-top-color: #4392e7;
+    border-bottom-color: #ffffff;
+}
+
+.notify-watch-img {
+    max-width: 35px;
+    height: 100%;
+    margin-right: 10px;
+}
+
+.Toastify__toast-theme--dark {
+    background-color: #060f3c;
 }
