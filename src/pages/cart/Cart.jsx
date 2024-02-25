@@ -65,8 +65,9 @@ const Cart = () => {
     );
 
   const [isChangingQty, setIsChangingQty] = useState(false);
-
+  const [currentItemIdChange, setCurrentItemIdChange] = useState(-1);
   const updateQty = async (itemId, method) => {
+    setCurrentItemIdChange(itemId);
     try {
       setIsChangingQty(true);
       const response = await controlQtyService(auth?.cartId, itemId, method);
@@ -79,6 +80,40 @@ const Cart = () => {
     }
   };
 
+  const [checkoutList, setCheckoutList] = useState([]);
+  const [selectAllItems, setSelectAllItems] = useState(false);
+  const selectAllToCheckout = () => {
+    if (selectAllItems) {
+      setCheckoutList([]);
+    } else {
+      setCheckoutList([...cart]);
+    }
+    setSelectAllItems(!selectAllItems);
+    console.log(cart);
+  };
+
+  const handleSelectChange = (itemId, idx) => {
+    const itemIndex = checkoutList.findIndex((item) => item.id === itemId);
+
+    if (itemIndex !== -1) {
+      const updatedCheckoutList = [...checkoutList];
+      updatedCheckoutList.splice(itemIndex, 1);
+      setCheckoutList(updatedCheckoutList);
+    } else {
+      setCheckoutList([...checkoutList, cart[idx]]);
+    }
+  };
+
+  useEffect(() => {
+    if (checkoutList.length === cart.length) {
+      setSelectAllItems(true);
+    } else {
+      setSelectAllItems(false);
+    }
+  }, [checkoutList, cart]);
+
+  console.log("ckl=" + checkoutList);
+  console.log("cart=" + cart);
   return (
     <section className="cart-container-section ">
       <div>
@@ -106,9 +141,17 @@ const Cart = () => {
         <h4>My Shopping Cart ({cart?.length})</h4>
         {cart && cart.length > 0 && (
           <div className="cart-select-info">
-            <button className="select-all-btn">Chọn tất cả</button>
+            <button className="select-all-btn" onClick={selectAllToCheckout}>
+              {selectAllItems ? "Bỏ chọn" : "Chọn tất cả"}
+            </button>
             <div>
-              <div style={{ color: "#fff" }}>{1} items selected</div>
+              <div style={{ color: "#fff" }}>
+                {checkoutList.length > 0
+                  ? checkoutList.length > 1
+                    ? `${checkoutList.length} items selected`
+                    : `${checkoutList.length} item selected`
+                  : "Hãy chọn sản phẩm ưng ý của bạn"}
+              </div>
             </div>
             <div style={{ marginLeft: "auto" }}>
               <span style={{ color: "#fff", fontWeight: "bold" }}>
@@ -142,7 +185,15 @@ const Cart = () => {
                 cart.map((item, idx) => (
                   <tr key={idx}>
                     <td>
-                      <input type="checkbox" name="" id="" />
+                      <input
+                        type="checkbox"
+                        name=""
+                        id={`list-items-${idx}`}
+                        onChange={() => handleSelectChange(item.id, idx)}
+                        checked={checkoutList.some(
+                          (checkoutItem) => checkoutItem.id === item.id
+                        )}
+                      />
                     </td>
                     <td>
                       <img
@@ -163,7 +214,11 @@ const Cart = () => {
                       {/* <p> */}
                       <div className="quantity-control position-relative">
                         <div
-                          className={`${isChangingQty ? "qty-spinner" : ""}`}
+                          className={`${
+                            isChangingQty && currentItemIdChange === item.id
+                              ? "qty-spinner"
+                              : ""
+                          }`}
                         ></div>
 
                         <button
