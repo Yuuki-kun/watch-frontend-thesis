@@ -28,6 +28,7 @@ const ActiveAccountPage = () => {
           email: response?.data?.email,
           accessToken: response?.data?.access_token,
           roles: response?.data?.roles,
+          cartId: response?.data?.cartId,
         });
 
         localStorage.setItem("refreshToken", response?.data?.refresh_token);

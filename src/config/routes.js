@@ -10,7 +10,7 @@ const UserInfo = React.lazy(() => import("../components/user-info/UserInfo"));
 const DashBoard = React.lazy(() =>
   import("../components/admin/dashboard/DashBoard")
 );
-const Cart = React.lazy(() => import("../components/cart/Cart"));
+const Cart = React.lazy(() => import("../pages/cart/Cart"));
 const Users = React.lazy(() => import("../components/admin/Users"));
 const ProductView = React.lazy(() => import("../pages/products/ProductView"));
 

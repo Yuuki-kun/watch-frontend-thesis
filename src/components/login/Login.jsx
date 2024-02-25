@@ -38,11 +38,12 @@ const Login = () => {
 
       const accessToken = response_data?.access_token;
       const roles = response_data?.roles;
-
+      const cartId = response_data?.cartId;
       setAuth({
         email,
         accessToken,
         roles,
+        cartId,
       });
 
       setEmail("");

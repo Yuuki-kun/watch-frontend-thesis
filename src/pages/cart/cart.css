@@ -1,0 +1,220 @@
+.cart-container-section {
+    padding-top: 2.5rem;
+    /* padding-left: 1rem; */
+    /* padding-right: 1rem; */
+    /* background-color: rgb(240, 240, 240); */
+    height: 1000px;
+}
+
+.cart-container {}
+
+.empty-cart-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+    gap: 20px;
+}
+
+.empty-cart-icon {
+    color: #7294c7;
+    font-size: 150px;
+}
+
+.return-to-shop-btn {
+    background-color: #3d7bd8;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 2.0rem;
+    padding: 5px 12px;
+    transition: background-color 0.3s ease;
+    overflow: hidden;
+    position: relative;
+    border: none;
+    border-radius: 20px;
+}
+
+.return-to-shop-btn:hover {
+    background-color: transparent;
+}
+
+.return-to-shop-btn:hover::before {
+    animation: gradientBorder 5s linear infinite;
+}
+
+.return-to-shop-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    background: linear-gradient(45deg, #93b0dc, #3520bc, #aac3df, #6600ff);
+    background-size: 400% 400%;
+    border-radius: 20px;
+    transition: background-position 0.5s;
+    background-position: 0% 50%;
+}
+
+@keyframes gradientBorder {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+
+.cart-container .line-container {
+    width: 100%;
+    height: 1px;
+    margin-top: .5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cart-container .line {
+    background-color: rgb(214, 213, 208);
+    height: 1.5px;
+    width: 100%;
+}
+
+.item-details-container {
+    margin-top: 1rem;
+}
+
+.table tr {
+    border-bottom: 1px solid rgb(214, 213, 208);
+    /* padding-left: 10px; */
+}
+
+.table tr:nth-child(1) {
+    border-bottom: 1px solid rgb(255, 255, 255);
+}
+
+.table tr td:nth-child(4),
+.table tr td:nth-child(5),
+.table tr td:nth-child(6) {
+    text-align: center;
+
+}
+
+.table p {
+    margin-bottom: 0;
+}
+
+
+.cart-item-img {
+    width: 200px;
+    height: auto;
+}
+
+.quantity-control {
+    padding: 5px 7px;
+}
+
+.de-button {
+    background-color: #c4cfe5;
+    border: none;
+    width: 40px;
+    height: 30px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.incr-button {
+    background-color: #c4cfe5;
+    border: none;
+    width: 40px;
+    height: 30px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.input-quantity {
+    text-align: center;
+    width: 50px;
+    height: 30px;
+    border: 1px solid #c4cfe5;
+}
+
+.input-quantity:focus {
+    outline: none;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.cart-container .delete-icon {
+    font-size: 2rem;
+    display: flex;
+    border: none;
+    background-color: #fff;
+    color: rgb(215, 107, 107);
+}
+
+.cart-select-info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.cart-select-info {
+    position: sticky;
+    top: 45px;
+    padding: 10px;
+    height: fit-content;
+    background-color: rgb(83, 78, 144);
+    z-index: 1;
+    /* box-shadow: 0 0 10px 1px rgb(221, 220, 218); */
+    border-radius: 7px;
+    /* border: 1px solid #000; */
+}
+
+.select-all-btn {
+    border-radius: 5px;
+    padding: 2px 4px;
+    border: 1px solid transparent;
+
+}
+
+.select-all-btn:hover {
+    background-color: #e0ecff;
+}
+
+.select-all-btn:active {
+    background-color: #bac0ca;
+}
+
+.checkout-btn {
+    background-color: #ff6000;
+    color: #fff;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    padding: 2px 4px;
+    font-size: 1rem;
+    margin-left: 10px;
+}
+
+.checkout-btn:hover {
+    background-color: #ce4f00;
+}
+
+.checkout-btn:active {
+    background-color: #953900;
+}
