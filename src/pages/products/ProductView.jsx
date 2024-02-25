@@ -405,8 +405,8 @@ const ProductView = () => {
                   )}
                   <div>
                     <ToastContainer
-                      position="top-right"
-                      autoClose={2000}
+                      position="bottom-center"
+                      autoClose={1000}
                       hideProgressBar={true}
                       newestOnTop={true}
                       closeOnClick

@@ -6,6 +6,8 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import "./cart.css";
 import useCart from "../../hooks/useCart";
 import { getCartItemsService } from "../../api/services/cartService";
+import DeleteProductModal from "../../components/modal/DeleteProductModal";
+import { Bounce, ToastContainer, toast } from "react-toastify";
 const Cart = () => {
   const { auth } = useAuth();
 
@@ -33,8 +35,55 @@ const Cart = () => {
     }
   }, [auth, setCart]);
   console.log(cart.length);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedDeleteWatchId, setSelectedDeleteWatchId] = useState(-1);
+  const openModal = (itemId) => {
+    setIsModalOpen(true);
+    setSelectedDeleteWatchId(itemId);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+  const deleteFromBag = (itemId) => {
+    openModal(itemId);
+  };
+
+  const notify = () =>
+    toast.success(
+      <div>
+        {/* <img
+          src={watchDetails.images[0].image}
+          alt=""
+          className="notify-watch-img"
+        /> */}
+        <span>Đã xóa!</span>
+      </div>
+    );
+
   return (
     <section className="cart-container-section ">
+      <div>
+        <ToastContainer
+          position="top-right"
+          autoClose={1000}
+          hideProgressBar={true}
+          newestOnTop={true}
+          closeOnClick
+          rtl={false}
+          draggable
+          theme="dark"
+          transition={Bounce}
+          success
+        />
+      </div>
+      <DeleteProductModal
+        isModalOpen={isModalOpen}
+        closeModal={closeModal}
+        cartId={auth?.cartId}
+        itemId={selectedDeleteWatchId}
+        toast={notify}
+      />
       <div className="cart-container container">
         <h4>My Shopping Cart ({cart?.length})</h4>
         {cart && cart.length > 0 && (
@@ -111,7 +160,10 @@ const Cart = () => {
                         className="d-flex align-items-center justify-content-center"
                         style={{ backgroundColor: "#fff" }}
                       >
-                        <button className="delete-icon">
+                        <button
+                          className="delete-icon"
+                          onClick={() => deleteFromBag(item.id)}
+                        >
                           <RiDeleteBin6Line />
                         </button>
                       </div>

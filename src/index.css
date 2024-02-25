@@ -8,3 +8,40 @@ body {
     min-height: 100%;
     background-color: #fff;
 }
+
+.ReactModal__Overlay.ReactModal__Overlay--after-open {
+    z-index: 1001 !important;
+}
+
+.style-modal {
+    background-color: #ebebeb;
+    padding: 20px;
+    border: none;
+    border-radius: 7px;
+    width: 500px;
+    height: 200px;
+}
+
+.modal-btn {
+    background-color: #fff;
+    padding: 5px 15px;
+    margin-right: 10px;
+    border-radius: 7px;
+    margin-top: 30px;
+}
+
+.modal-accept-btn {
+    border: 2px solid green;
+}
+
+.modal-accept-btn:hover {
+    background-color: rgb(213, 255, 213);
+}
+
+.modal-decline-btn {
+    border: 2px solid red;
+}
+
+.modal-decline-btn:hover {
+    background-color: rgb(255, 214, 214);
+}

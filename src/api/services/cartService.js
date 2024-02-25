@@ -1,4 +1,8 @@
-import { ADD_TO_BAG_URL, GET_CART_ITEMS_URL } from "../../config/rest-api";
+import {
+  ADD_TO_BAG_URL,
+  DELETE_ITEMS,
+  GET_CART_ITEMS_URL,
+} from "../../config/rest-api";
 import axios from "../axios";
 
 export const getCartItemsService = async (cartId) => {
@@ -24,5 +28,18 @@ export const addToBagService = async (cartId, watchId, price, quantity) => {
   } catch (error) {
     console.error(error);
     throw error;
+  }
+};
+
+export const removeFromBagService = async (cartId, itemId) => {
+  try {
+    console.log("cart=" + cartId + "itemid=" + itemId);
+    const response = await axios.delete(
+      `${DELETE_ITEMS}?cart=${cartId}&item=${itemId}`
+    );
+    console.log(response.data);
+    return response?.data;
+  } catch (err) {
+    console.error(err);
   }
 };
