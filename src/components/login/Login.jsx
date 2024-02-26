@@ -7,12 +7,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import "./login.css";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+
 const Login = () => {
   const { setAuth, persist, setPersist } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
-
+  console.log(location.state);
   const emailRef = useRef();
   const errRef = useRef();
 

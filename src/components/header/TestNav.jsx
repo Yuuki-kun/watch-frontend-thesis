@@ -5,7 +5,7 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import { IoSearch } from "react-icons/io5";
 import { FaRegUser } from "react-icons/fa6";
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import useLogout from "../../hooks/useLogout";
 
@@ -93,6 +93,7 @@ const TestNav = () => {
   const signout = async () => {
     await logout();
   };
+  const location = useLocation();
 
   return (
     <>
@@ -227,10 +228,14 @@ const TestNav = () => {
                   ) : (
                     <>
                       <li className="dropdown-item">
-                        <Link to={"login"}>login</Link>
+                        <Link to={"/login"} state={{ from: location }}>
+                          login
+                        </Link>
                       </li>
                       <li className="dropdown-item">
-                        <Link to={"register"}>register</Link>
+                        <Link to={"/register"} state={{ from: location }}>
+                          register
+                        </Link>
                       </li>
                     </>
                   )}
