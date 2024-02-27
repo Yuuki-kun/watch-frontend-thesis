@@ -9,3 +9,5 @@ export const DELETE_ITEMS = "/api/v1/user-cart/delete-items";
 export const UPDATE_ITEM_QTY = "/api/v1/user-cart/update-quantity";
 
 export const GET_FAVORITE_LIST = "/api/v1/favorite";
+export const ADD_FAVORITE_LIST = "/api/v1/favorite/add-to-favorite-list";
+export const REMOVE_FAVORITE_LIST = "/api/v1/favorite";

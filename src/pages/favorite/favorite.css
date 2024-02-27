@@ -1,0 +1,11 @@
+.section-favorite-container {
+    background-color: rgb(241, 244, 246);
+    min-height: 150vh;
+}
+
+.favorite-container {
+    padding-top: 1.5rem;
+    font-size: 1.5rem;
+    font-weight: 500;
+
+}

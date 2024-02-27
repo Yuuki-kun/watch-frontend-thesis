@@ -1,12 +1,13 @@
 import React from "react";
 import TestPage from "../pages/TestPage";
-
+// import ProductView from "../pages/products/ProductView";
 const ActiveAccount = React.lazy(() => import("../pages/ActiveAccountPage"));
 const Login = React.lazy(() => import("../components/login/Login"));
 const Home = React.lazy(() => import("../pages/home/Home"));
 const Register = React.lazy(() => import("../components/register/Register"));
 const Register2 = React.lazy(() => import("../components/register/Register2"));
 const UserInfo = React.lazy(() => import("../components/user-info/UserInfo"));
+const Favorite = React.lazy(() => import("../pages/favorite/Favorite"));
 const DashBoard = React.lazy(() =>
   import("../components/admin/dashboard/DashBoard")
 );
@@ -37,7 +38,10 @@ export const publicRoutesNoLayout = [
   { path: "active-account/:token", component: ActiveAccount },
 ];
 
-export const userPrivateRoutes = [{ path: "user-info", component: UserInfo }];
+export const userPrivateRoutes = [
+  { path: "user-info", component: UserInfo },
+  { path: "favorite", component: Favorite },
+];
 
 export const adminPrivateRoutes = [
   { path: "", component: DashBoard },

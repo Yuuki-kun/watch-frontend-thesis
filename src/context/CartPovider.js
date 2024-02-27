@@ -4,7 +4,6 @@ export const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [favoriteList, setFavoriteList] = useState([]);
-  const [isFetchFavorite, setIsFetchFavorite] = useState(false);
   return (
     <CartContext.Provider
       value={{
@@ -12,8 +11,6 @@ export const CartProvider = ({ children }) => {
         setCart,
         favoriteList,
         setFavoriteList,
-        isFetchFavorite,
-        setIsFetchFavorite,
       }}
     >
       {children}

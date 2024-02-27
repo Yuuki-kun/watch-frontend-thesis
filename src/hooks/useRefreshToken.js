@@ -26,6 +26,7 @@ const useRefreshToken = () => {
           roles: response.data.roles,
           accessToken: response.data.access_token,
           cartId: response.data.cartId,
+          userId: response.data.userId,
         };
       });
 

@@ -25,16 +25,25 @@ import {
   Zoom,
   toast,
 } from "react-toastify";
+import useCart from "../../hooks/useCart";
+import {
+  addToFavoriteService,
+  getFavoriteListService,
+  removeFromFavoriteService,
+} from "../../api/services/favoriteListService";
+import usePrivateRequest from "../../hooks/usePrivateRequest";
 
 const ProductView = () => {
   const { auth } = useAuth();
+  const axiosPrivate = usePrivateRequest();
   const { reference } = useParams();
   const [watchDetails, setWatchDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [sizeSelects, setSizeSelects] = useState([]);
   const [selectedSize, setSelectedSize] = useState("No size adjusting");
-  const [isToggleDesc, setIsToggleDesc] = useState([]);
+  const [isToggleDesc, setIsToggleDesc] = useState(false);
   const [isAddingToBag, setIsAddingToBag] = useState(false);
+  const [isInWishList, setIsInWishList] = useState(false);
 
   const [ratingStarsCount, setRatingStarsCount] = useState({
     1: 0,
@@ -43,7 +52,7 @@ const ProductView = () => {
     4: 0,
     5: 0,
   });
-
+  const { favoriteList, setFavoriteList } = useCart();
   // console.log(reference);
 
   useEffect(() => {
@@ -226,23 +235,6 @@ const ProductView = () => {
     };
   }, []);
 
-  console.log(isScrolledToBottom);
-
-  // const getDateFromTimestamp = (datePosted) => {
-  //   const postedDate = new Date(datePosted);
-
-  //   // Lấy thông tin về năm, tháng, ngày, giờ, phút và giây
-  //   const year = postedDate.getFullYear();
-  //   const month = ("0" + (postedDate.getMonth() + 1)).slice(-2); // Thêm 1 vì tháng bắt đầu từ 0
-  //   const day = ("0" + postedDate.getDate()).slice(-2);
-  //   const hours = ("0" + postedDate.getHours()).slice(-2);
-  //   const minutes = ("0" + postedDate.getMinutes()).slice(-2);
-  //   const seconds = ("0" + postedDate.getSeconds()).slice(-2);
-
-  //   // Tạo định dạng ngày tháng năm mới
-  //   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-  // };
-
   const [heartStates, setHeartStates] = useState(
     new Array(watchDetails?.reviews?.length).fill(false)
   );
@@ -280,10 +272,70 @@ const ProductView = () => {
         setTimeout(() => {
           response && setIsAddingToBag(false);
           notify();
-        }, 500);
+        }, 200);
       } catch (error) {}
     } else {
       console.error("auth.cartId or watchDetails.id is undefined.");
+    }
+  };
+
+  useEffect(() => {
+    const getWishList = async () => {
+      try {
+        const wishList = await getFavoriteListService(
+          auth.userId,
+          axiosPrivate
+        );
+        if (wishList) {
+          setFavoriteList(wishList);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    if (auth.userId) {
+      getWishList();
+    }
+  }, [auth.userId, axiosPrivate, setFavoriteList]);
+
+  useEffect(() => {
+    const productIsInWishList = (wid) => {
+      if (Array.isArray(favoriteList) && favoriteList.length > 0) {
+        return favoriteList.some((item) => item.watchId === wid);
+      }
+      return false;
+    };
+
+    setIsInWishList(productIsInWishList(watchDetails?.id));
+  }, [favoriteList, watchDetails]);
+
+  const addToFavoriteList = async (wid) => {
+    if (!isInWishList) {
+      try {
+        const response = await addToFavoriteService(
+          auth.userId,
+          wid,
+          axiosPrivate
+        );
+        console.log(response);
+        setFavoriteList(response);
+        setIsInWishList(true);
+      } catch (err) {
+        console.error(err);
+      }
+    } else {
+      try {
+        const response = await removeFromFavoriteService(
+          auth.userId,
+          wid,
+          axiosPrivate
+        );
+        console.log(response);
+        setFavoriteList(response);
+        setIsInWishList(false);
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 
@@ -311,8 +363,15 @@ const ProductView = () => {
             <div className="col-5 pv-main-img sticky-col">
               <ImageMagnifier imgUrl={watchDetails?.images[currentImg].image} />
               {/* {check if the watch is in wish list?} */}
-              <button className="pv-wish-list-btn">
-                <FaRegHeart />
+              <button
+                className="pv-wish-list-btn"
+                onClick={() => addToFavoriteList(watchDetails.id)}
+              >
+                {isInWishList ? (
+                  <FaHeart style={{ color: "red", important: "true" }} />
+                ) : (
+                  <FaRegHeart />
+                )}
               </button>
             </div>
             <div className="col-6 pv-info-container">

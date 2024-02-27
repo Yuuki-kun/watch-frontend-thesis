@@ -11,25 +11,26 @@ import useCart from "../../hooks/useCart";
 import usePrivateRequest from "../../hooks/usePrivateRequest";
 const Home = () => {
   const { auth } = useAuth();
-  const { favoriteList, setFavoriteList, isFetchFavorite, setIsFetchFavorite } =
-    useCart();
+  const { favoriteList, setFavoriteList } = useCart();
   const axiosPrivate = usePrivateRequest();
   useEffect(() => {
     const getWishList = async () => {
       try {
-        const wishList = await getFavoriteListService(auth.email, axiosPrivate);
+        const wishList = await getFavoriteListService(
+          auth.userId,
+          axiosPrivate
+        );
         if (wishList) {
           setFavoriteList(wishList);
-          setIsFetchFavorite(true);
         }
       } catch (err) {
         console.error(err);
       }
     };
-    if (auth.email && !isFetchFavorite) {
+    if (auth.userId) {
       getWishList();
     }
-  }, [auth.email, isFetchFavorite, setFavoriteList, axiosPrivate]);
+  }, [auth.userId, axiosPrivate]);
   console.log(favoriteList);
   return (
     <div className="home-section">

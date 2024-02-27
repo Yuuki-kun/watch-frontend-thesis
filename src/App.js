@@ -30,7 +30,7 @@ function App() {
         <Route element={<Persist />}>
           <Route path="/" element={<UserLayout />}>
             {CreateRoutesFromList(publicRoutes)}
-            <Route element={<RequireAuth allowedRoles={[1234]} />}>
+            <Route element={<RequireAuth allowedRoles={[1234, 9012]} />}>
               {CreateRoutesFromList(userPrivateRoutes)}
             </Route>
           </Route>

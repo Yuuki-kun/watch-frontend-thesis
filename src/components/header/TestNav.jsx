@@ -137,7 +137,7 @@ const TestNav = () => {
         </ul>
         <ul>
           <li>
-            <Link className="logo-link">
+            <Link className="logo-link" to={"/"}>
               <img src="/logo512.png" alt="logo512" className="logo-home" />
             </Link>
           </li>
@@ -211,7 +211,11 @@ const TestNav = () => {
                       <li className="dropdown-item">
                         <button onClick={() => signout()}>logout</button>
                       </li>
-
+                      <li className="dropdown-item">
+                        <Link to={"/favorite"} state={{ from: location }}>
+                          Danh sách yêu thích
+                        </Link>
+                      </li>
                       <li className="dropdown-item">
                         <p>item 1</p>
                       </li>
@@ -229,12 +233,17 @@ const TestNav = () => {
                     <>
                       <li className="dropdown-item">
                         <Link to={"/login"} state={{ from: location }}>
-                          login
+                          Đăng nhập
                         </Link>
                       </li>
                       <li className="dropdown-item">
                         <Link to={"/register"} state={{ from: location }}>
-                          register
+                          Đăng ký
+                        </Link>
+                      </li>
+                      <li className="dropdown-item">
+                        <Link to={"/favorite"} state={{ from: location }}>
+                          Danh sách yêu thích
                         </Link>
                       </li>
                     </>
