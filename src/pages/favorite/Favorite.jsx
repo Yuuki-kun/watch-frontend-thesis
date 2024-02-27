@@ -1,23 +1,30 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./favorite.css";
 import useCart from "../../hooks/useCart";
 import useAuth from "../../hooks/useAuth";
 import usePrivateRequest from "../../hooks/usePrivateRequest";
-import { getFavoriteListService } from "../../api/services/favoriteListService";
+import {
+  getDetailFavoriteService,
+  getFavoriteListService,
+  removeFromFavoriteService,
+} from "../../api/services/favoriteListService";
+import ReactStars from "react-stars";
+import { addToBagService } from "../../api/services/cartService";
+import { Bounce, ToastContainer, toast } from "react-toastify";
 const Favorite = () => {
   const { auth } = useAuth();
 
-  const { favoriteList, setFavoriteList } = useCart();
+  const [fvrDetailList, setFvrDetailList] = useState([]);
   const axiosPrivate = usePrivateRequest();
   useEffect(() => {
     const getWishList = async () => {
       try {
-        const wishList = await getFavoriteListService(
+        const wishList = await getDetailFavoriteService(
           auth.userId,
           axiosPrivate
         );
         if (wishList) {
-          setFavoriteList(wishList);
+          setFvrDetailList(wishList);
         }
       } catch (err) {
         console.error(err);
@@ -26,14 +33,123 @@ const Favorite = () => {
     if (auth.userId) {
       getWishList();
     }
-  }, [auth.userId, setFavoriteList, axiosPrivate]);
-  console.log(favoriteList);
+  }, [auth.userId, axiosPrivate]);
+  console.log(fvrDetailList);
+
+  const moveToBag = async (watchDetails) => {
+    // Check if auth and watchDetails are defined
+    if (auth?.cartId && watchDetails?.id) {
+      try {
+        const response = await addToBagService(
+          auth.cartId,
+          watchDetails.id,
+          watchDetails.price,
+          1
+        );
+        notify(watchDetails.images[0].image);
+      } catch (error) {}
+    } else {
+      console.error("auth.cartId or watchDetails.id is undefined.");
+    }
+  };
+
+  const remove = async (wid) => {
+    try {
+      const response = await removeFromFavoriteService(
+        auth?.userId,
+        wid,
+        axiosPrivate
+      );
+      const updatedItems = fvrDetailList.filter((item) => item.id !== wid);
+      setFvrDetailList(updatedItems);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const notify = (wimg) =>
+    toast.success(
+      <div>
+        <img src={wimg} alt="" className="notify-watch-img" />
+        <span>Đã thêm vào giỏ hàng!</span>
+      </div>
+    );
   return (
     <section className="section-favorite-container">
+      <ToastContainer
+        position="bottom-center"
+        autoClose={1000}
+        hideProgressBar={true}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        draggable
+        theme="dark"
+        transition={Bounce}
+        success
+      />
       <div className="container favorite-container">
         <div className="row">
-          <div className="col-12">MY LIST ({favoriteList?.length})</div>
-          {favoriteList && favoriteList.map((fv, idx) => <div></div>)}
+          <div className="col-12">MY LIST ({fvrDetailList?.length})</div>
+          {fvrDetailList &&
+            fvrDetailList.map((fv, idx) => (
+              <div className="col-6 fav-item-container" key={idx}>
+                <div
+                  className={`fav-stock-status ${
+                    fv.watch.inventoryQuantity > 0 ? "in-stock" : "out-stock"
+                  }`}
+                >
+                  <div className="stock-content">
+                    {fv.watch.inventoryQuantity > 0 ? "In Stock" : "Sold Out"}
+                  </div>
+                </div>
+                <div className="fav-item">
+                  <div className="fav-watch-img">
+                    <img
+                      src={fv.watch.images[0].image}
+                      alt={fv.watch.name}
+                      className="fv-img"
+                    />
+                  </div>
+                  <div className="fav-item-info">
+                    <div>
+                      <h3>{fv.watch.brand.brandName}</h3>
+                      <p className="fav-prod-name">{fv.watch.name}</p>
+                      <p className="fav-inf">{fv.watch.reference}</p>
+
+                      <span>
+                        {(fv.watch.defaultPrices * 10000000).toLocaleString()}đ
+                      </span>
+                      <ReactStars
+                        edit={false}
+                        value={fv.watch.stars}
+                        size={20}
+                      />
+                      <p className="fav-inf">
+                        Date Added: {new Date(fv.dateAdded).toLocaleString()}
+                      </p>
+                    </div>
+                    <div className="fav-btn-container">
+                      <button
+                        className="fav-btn fav-move-bag"
+                        onClick={() => moveToBag(fv.watch)}
+                        disabled={fv.watch.inventoryQuantity <= 0}
+                      >
+                        {fv.watch.inventoryQuantity > 0
+                          ? "Move To Bag"
+                          : "Sold Out"}
+                      </button>
+                      <button
+                        className="fav-btn fav-rm"
+                        onClick={() => remove(fv.watch.id)}
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
         </div>
       </div>
     </section>

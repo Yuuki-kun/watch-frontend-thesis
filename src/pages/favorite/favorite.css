@@ -4,8 +4,133 @@
 }
 
 .favorite-container {
-    padding-top: 1.5rem;
+    padding-top: 2.5rem;
     font-size: 1.5rem;
     font-weight: 500;
+}
 
+.fav-item-container {
+    /* background-color: #fff; */
+    margin-top: 1.5rem;
+    position: relative;
+}
+
+.fav-item {
+
+    background-color: #fff;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    /* border: 2px solid black; */
+    border-radius: 10px;
+    gap: 20px;
+    box-shadow: 5px 4px 7px 1px rgba(0, 0, 0, 0.2);
+    transition: box-shadow .3s ease;
+}
+
+.fav-item:hover {
+    .fv-img {
+        transform: scale(1.1);
+    }
+
+    box-shadow: 5px 4px 7px 1px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+}
+
+
+.fav-item-info {
+    width: 100%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding-right: 15px;
+    color: #505050;
+}
+
+.fav-item-info h3 {
+    font-size: 1.5rem;
+    color: #4b4b59;
+    font-weight: bold;
+}
+
+.fav-prod-name {
+    font-size: 1.2rem;
+    color: #7d7d7d;
+    margin-bottom: 0;
+}
+
+.fav-inf {
+    margin-bottom: 0;
+    font-size: 1rem;
+}
+
+.fv-img {
+    width: 200px;
+    height: auto;
+    transition: all .3s ease;
+}
+
+.fav-btn-container {
+    align-self: flex-end;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 1.2rem;
+}
+
+.fav-btn {
+    border: #fff;
+    padding: 5px 12px;
+    color: #606060;
+    transition: all .4s ease;
+    font-weight: 500;
+}
+
+.fav-btn:hover {
+    background-color: #9a9a9a;
+}
+
+.fav-stock-status {
+    position: absolute;
+    right: 0;
+    top: .5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    background-color: transparent;
+    border-right: 1rem solid transparent;
+}
+
+.fav-stock-status.in-stock {
+    border-top: 10px solid green;
+    border-bottom: 10px solid green;
+    width: 100px;
+    height: 0;
+    color: #fff;
+}
+
+.fav-stock-status.out-stock {
+    border-top: 10px solid rgb(148, 148, 148);
+    border-bottom: 10px solid rgb(148, 148, 148);
+    width: 100px;
+    height: 0;
+    color: #000;
+}
+
+.stock-content {
+    position: absolute;
+    top: -12px;
+    left: 10px;
+}
+
+.notify-watch-img {
+    max-width: 35px;
+    height: 100%;
+    margin-right: 10px;
+}
+
+.Toastify__toast-theme--dark {
+    background-color: #060f3c;
 }
