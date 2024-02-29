@@ -203,7 +203,7 @@ const TestNav = () => {
                 }`}
               >
                 <h3>
-                  Test dropdown <span>tcm</span>
+                  User <span style={{ fontSize: "1rem" }}>{auth?.email}</span>
                 </h3>
                 <ul className="dropdown-list">
                   {auth?.email ? (
@@ -212,9 +212,7 @@ const TestNav = () => {
                         <button onClick={() => signout()}>logout</button>
                       </li>
                       <li className="dropdown-item">
-                        <Link to={"/favorite"} state={{ from: location }}>
-                          Danh sách yêu thích
-                        </Link>
+                        <Link to={"/favorite"}>Danh sách yêu thích</Link>
                       </li>
                       <li className="dropdown-item">
                         <p>item 1</p>
@@ -242,9 +240,7 @@ const TestNav = () => {
                         </Link>
                       </li>
                       <li className="dropdown-item">
-                        <Link to={"/favorite"} state={{ from: location }}>
-                          Danh sách yêu thích
-                        </Link>
+                        <Link to={"/favorite"}>Danh sách yêu thích</Link>
                       </li>
                     </>
                   )}

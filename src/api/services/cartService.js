@@ -1,7 +1,9 @@
 import {
+  ADD_TO_BAG_UNAU_URL,
   ADD_TO_BAG_URL,
   DELETE_ITEMS,
   GET_CART_ITEMS_URL,
+  GET_TEMPORARY_CART,
   UPDATE_ITEM_QTY,
 } from "../../config/rest-api";
 import axios from "../axios";
@@ -9,6 +11,16 @@ import axios from "../axios";
 export const getCartItemsService = async (cartId) => {
   try {
     const response = await axios.get(`${GET_CART_ITEMS_URL}?cart=${cartId}`);
+    return response?.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const getTempoCart = async () => {
+  try {
+    const response = await axios.get(GET_TEMPORARY_CART);
     return response?.data;
   } catch (error) {
     console.error(error);

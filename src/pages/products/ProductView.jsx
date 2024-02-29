@@ -15,7 +15,11 @@ import { FaHeart } from "react-icons/fa";
 
 import BestSellerItems from "../../components/home/BestSellerItems";
 import Slider from "react-slick";
-import { addToBagService } from "../../api/services/cartService";
+import {
+  addToBagService,
+  addToBagUnAuthService,
+  getTempoCart,
+} from "../../api/services/cartService";
 import useAuth from "../../hooks/useAuth";
 import {
   Bounce,
@@ -275,7 +279,49 @@ const ProductView = () => {
         }, 200);
       } catch (error) {}
     } else {
-      console.error("auth.cartId or watchDetails.id is undefined.");
+      console.log("have not cart");
+      console.log(localStorage.getItem("tempo-cart"));
+      if (
+        localStorage.getItem("tempo-cart") === null ||
+        localStorage.getItem("tempo-cart") === "undefined"
+      ) {
+        console.log("get cart?");
+
+        try {
+          const cart_id = await getTempoCart();
+          if (cart_id) {
+            localStorage.setItem("tempo-cart", cart_id);
+          }
+          try {
+            const response = await addToBagService(
+              cart_id,
+              watchDetails.id,
+              watchDetails.price,
+              1
+            );
+            setTimeout(() => {
+              response && setIsAddingToBag(false);
+              notify();
+            }, 200);
+          } catch (error) {}
+        } catch (err) {
+          console.error(err);
+        }
+      } else {
+        const cartId = localStorage.getItem("tempo-cart");
+        try {
+          const response = await addToBagService(
+            cartId,
+            watchDetails.id,
+            watchDetails.price,
+            1
+          );
+          setTimeout(() => {
+            response && setIsAddingToBag(false);
+            notify();
+          }, 200);
+        } catch (error) {}
+      }
     }
   };
 
@@ -476,10 +522,18 @@ const ProductView = () => {
                       success
                     />
                   </div>
-                  <button className="pv-add-to-cart-btn" onClick={addToBag}>
+                  <button
+                    className="pv-add-to-cart-btn"
+                    onClick={addToBag}
+                    disabled={watchDetails.inventoryQuantity <= 0}
+                  >
                     <div className={`${isAddingToBag ? "spinner" : ""}`}></div>
                     <span style={{ color: isAddingToBag ? "#bbb" : "#fff" }}>
-                      {isAddingToBag ? "Adding To Your Bag..." : "Add To Bag"}
+                      {watchDetails.inventoryQuantity > 0
+                        ? isAddingToBag
+                          ? "Adding To Your Bag..."
+                          : "Add To Bag"
+                        : "SOLD OUT"}
                     </span>
 
                     {/* {isAddingToBag ? "Adding to your bag..." : "Add to bag"} */}

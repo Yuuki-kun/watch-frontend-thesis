@@ -249,3 +249,7 @@ input[type=number] {
     border-bottom-color: #b7b7b7;
 
 }
+
+button:disabled {
+    background-color: #ddd;
+}

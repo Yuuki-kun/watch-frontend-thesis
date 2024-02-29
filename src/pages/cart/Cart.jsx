@@ -11,6 +11,7 @@ import {
 } from "../../api/services/cartService";
 import DeleteProductModal from "../../components/modal/DeleteProductModal";
 import { Bounce, ToastContainer, toast } from "react-toastify";
+import { useLocation, useNavigate } from "react-router-dom";
 const Cart = () => {
   const { auth } = useAuth();
 
@@ -34,10 +35,15 @@ const Cart = () => {
         fetchCartData(auth?.cartId);
       } else {
         console.log("have not cart");
+        const cartId = localStorage.getItem("tempo-cart");
+        console.log(cartId);
+        if (cartId) {
+          fetchCartData(cartId);
+        }
       }
     }
   }, [auth, setCart]);
-  console.log(cart.length);
+  console.log(cart);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDeleteWatchId, setSelectedDeleteWatchId] = useState(-1);
@@ -70,15 +76,38 @@ const Cart = () => {
     setCurrentItemIdChange(itemId);
     try {
       setIsChangingQty(true);
-      const response = await controlQtyService(auth?.cartId, itemId, method);
+      if (auth?.cartId) {
+        const response = await controlQtyService(auth.cartId, itemId, method);
+        setCart(response);
+      } else {
+        const response = await controlQtyService(
+          localStorage.getItem("tempo-cart"),
+          itemId,
+          method
+        );
+        setCart(response);
+      }
       setTimeout(() => {
         setIsChangingQty(false);
       }, 200);
-      setCart(response);
     } catch (err) {
       console.error(err);
     }
   };
+
+  useEffect(() => {
+    //cartId use as order details id
+    const items = cart.map((cit) => {
+      return {
+        cartId: cit.id,
+        quantity: cit.quantity,
+        price: cit.price,
+        watchId: cit.watch.id,
+      };
+    });
+
+    localStorage.setItem("cart-items", JSON.stringify(items));
+  }, [cart]);
 
   const [checkoutList, setCheckoutList] = useState([]);
   const [selectAllItems, setSelectAllItems] = useState(false);
@@ -105,7 +134,7 @@ const Cart = () => {
   };
 
   useEffect(() => {
-    if (checkoutList.length === cart.length) {
+    if (checkoutList?.length === cart?.length) {
       setSelectAllItems(true);
     } else {
       setSelectAllItems(false);
@@ -114,6 +143,22 @@ const Cart = () => {
 
   console.log("ckl=" + checkoutList);
   console.log("cart=" + cart);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const handleCheckout = () => {
+    if (auth.userId) {
+      console.log("auth");
+    } else {
+      console.log("no login");
+      navigate("/login", {
+        state: {
+          from: location,
+          method: "checkout",
+        },
+      });
+    }
+  };
+
   return (
     <section className="cart-container-section ">
       <div>
@@ -154,10 +199,14 @@ const Cart = () => {
               </div>
             </div>
             <div style={{ marginLeft: "auto" }}>
-              <span style={{ color: "#fff", fontWeight: "bold" }}>
-                Tổng: 100,000,000đ
-              </span>
-              <button className="checkout-btn">Thanh toán/Mua hàng</button>
+              <span style={{ color: "#fff", fontWeight: "bold" }}>Tổng: đ</span>
+              <button
+                className="checkout-btn"
+                onClick={handleCheckout}
+                disabled={checkoutList?.length <= 0}
+              >
+                Thanh toán/Mua hàng
+              </button>
             </div>
           </div>
         )}

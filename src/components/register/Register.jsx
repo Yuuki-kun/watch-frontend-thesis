@@ -123,7 +123,7 @@ const Register = () => {
       const response_data = await RegisterService(registerUser);
       console.log(response_data);
 
-      // handleAuthAndLocalStorage(response_data, setAuth);
+      handleAuthAndLocalStorage(response_data, setAuth);
 
       // setRegisterUser({
       //   firstName: "",
@@ -136,7 +136,8 @@ const Register = () => {
       // setSuccess(true);
 
       setErrMsg(
-        "Registration success, please check out your email to active your account!"
+        // "Registration success, please check out your email to active your account!"
+        "Registration success!"
       );
       errorRef.current.focus();
     } catch (error) {
@@ -167,9 +168,12 @@ const Register = () => {
       email: registerUser.email,
       role: response_data?.roles,
       accessToken: response_data?.access_token,
+      userId: response_data?.userId,
+      cartId: response_data?.cartId,
     });
 
     localStorage.setItem("refreshToken", response_data?.refresh_token);
+    setSuccess(true);
   };
   //register
 
@@ -184,26 +188,26 @@ const Register = () => {
 
   const [startListener, setStartListener] = useState(false);
 
-  useEffect(() => {
-    if (startListener) {
-      localStorage.setItem("from", from);
-      //set some user's prev info
-      const intervalId = setInterval(() => {
-        const newValue = localStorage.getItem("refreshToken");
-        console.log("waiting");
-        if (newValue !== localStorageValue) {
-          // window.close();
-        }
-      }, 1000);
-      const stopInterval = setTimeout(() => {
-        clearInterval(intervalId);
-      }, 15 * 60 * 1000);
-      return () => {
-        clearInterval(intervalId);
-        clearTimeout(stopInterval);
-      };
-    }
-  }, [startListener, localStorageValue]);
+  // useEffect(() => {
+  //   if (startListener) {
+  //     localStorage.setItem("from", from);
+  //     //set some user's prev info
+  //     const intervalId = setInterval(() => {
+  //       const newValue = localStorage.getItem("refreshToken");
+  //       console.log("waiting");
+  //       if (newValue !== localStorageValue) {
+  //         // window.close();
+  //       }
+  //     }, 1000);
+  //     const stopInterval = setTimeout(() => {
+  //       clearInterval(intervalId);
+  //     }, 15 * 60 * 1000);
+  //     return () => {
+  //       clearInterval(intervalId);
+  //       clearTimeout(stopInterval);
+  //     };
+  //   }
+  // }, [startListener, localStorageValue]);
 
   const refreshTokenAsynFunc = async () => {
     try {
@@ -226,7 +230,8 @@ const Register = () => {
   return (
     <>
       {success ? (
-        <Navigate to={from} replace />
+        // <Navigate to={from} replace />
+        <div>success</div>
       ) : (
         <div className="container regis-page-container">
           <div className="register-container">
