@@ -14,16 +14,14 @@ export const LoginService = async ({ email, password }) => {
   }
 };
 
-export const LoginCheckoutService = async (email, password, cartItems) => {
+export const LoginCheckoutService = async (email, password, tempoCartId) => {
   console.log("log" + email);
   console.log("log" + password);
-  console.log("log" + cartItems);
 
   try {
-    const response = await axios.post(LOGIN_CK_URL, {
+    const response = await axios.post(`${LOGIN_CK_URL}/${tempoCartId}`, {
       email,
       password,
-      cartItems,
     });
     return response?.data;
   } catch (error) {

@@ -43,45 +43,45 @@ const Login = () => {
     try {
       let response_data;
       if (location?.state?.method === "checkout") {
-        const cartItem = localStorage.getItem("cart-items");
-        const cartItemOrNull =
-          cartItem && cartItem !== "undefined" ? cartItem : null;
+        // const items = localStorage.getItem("checkout-list");
+        const tempoCartId = localStorage.getItem("tempo-cart");
+        // const itemsOrNull = items && items !== "undefined" ? items : null;
 
-        if (!(cartItemOrNull === null)) {
-          console.log(cartItemOrNull);
-          const cartItems = JSON.parse(cartItemOrNull);
-          console.log(cartItems[0]);
+        // if (!(itemsOrNull === null)) {
+        // console.log(itemsOrNull);
+        // const itemss = JSON.parse(itemsOrNull);
+        // console.log(itemss[0]);
 
-          try {
-            response_data = await LoginCheckoutService(
-              email,
-              password,
-              cartItems
-            );
+        try {
+          response_data = await LoginCheckoutService(
+            email,
+            password,
+            tempoCartId
+          );
 
-            const accessToken = response_data?.access_token;
-            const roles = response_data?.roles;
-            const cartId = response_data?.cartId;
-            const userId = response_data?.userId;
+          const accessToken = response_data?.access_token;
+          const roles = response_data?.roles;
+          const cartId = response_data?.cartId;
+          const userId = response_data?.userId;
 
-            setAuth({
-              email,
-              accessToken,
-              roles,
-              cartId,
-              userId,
-            });
+          setAuth({
+            email,
+            accessToken,
+            roles,
+            cartId,
+            userId,
+          });
 
-            setEmail("");
-            setpassword("");
+          setEmail("");
+          setpassword("");
 
-            localStorage.setItem("refreshToken", response_data?.refresh_token);
+          localStorage.setItem("refreshToken", response_data?.refresh_token);
 
-            navigate(from, { replace: true });
-          } catch (err) {
-            console.error(err);
-          }
-        } else return;
+          navigate(from, { replace: true });
+        } catch (err) {
+          console.error(err);
+        }
+        // } else return;
       } else {
         response_data = await LoginService({ email, password });
         const accessToken = response_data?.access_token;

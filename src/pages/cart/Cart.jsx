@@ -139,6 +139,16 @@ const Cart = () => {
     } else {
       setSelectAllItems(false);
     }
+    const items = checkoutList.map((cit) => {
+      //the cartId is order Details ID
+      return {
+        cartId: cit.id,
+        quantity: cit.quantity,
+        price: cit.price,
+        watchId: cit.watch.id,
+      };
+    });
+    localStorage.setItem("checkout-list", JSON.stringify(items));
   }, [checkoutList, cart]);
 
   console.log("ckl=" + checkoutList);
