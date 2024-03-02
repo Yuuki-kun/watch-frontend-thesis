@@ -1,13 +1,30 @@
 .header-container {
-  position: relative;
+  position: fixed;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  background-color: #fff;
+}
+
+.head-infor {
+  /* position: relative; */
+  height: 30px;
+  /* top: 0; */
+  background-color: #fff;
+  display: block;
+  transition: all .3s ease;
+}
+
+.head-infor.hide {
+  display: none !important;
 }
 
 .nav-s.active {
-  position: fixed;
-  top: 0;
+  /* position: relative; */
+  /* top: 30px; */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: all 0.5s ease;
-  height: 45px;
+  height: 55px;
   font-size: .9rem;
   background-color: rgba(255, 255, 255, 0.9);
 }
@@ -17,10 +34,10 @@ nav {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   height: 80px;
   display: flex;
-  /* position: fixed; */
+  position: fixed;
   width: 100%;
   z-index: 1000;
-  position: relative;
+  /* position: relative; */
 }
 
 nav.nav-shadow-scroll {
@@ -198,9 +215,11 @@ nav li:first-child {
 
 .menu-container {
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
-.dropdown-menu {
+.dropdown-user-menu {
   position: absolute;
   top: 120%;
   right: 0;
@@ -210,11 +229,15 @@ nav li:first-child {
   transform: rotate(45deg);
   transition: all 0.3s ease;
   width: 200px;
-  box-shadow: 2px 4px 7px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 6px 2px rgba(0, 0, 0, 0.3);
+  align-items: center;
+  justify-content: center;
   z-index: 1001;
+  background-color: #fff;
+  border-radius: 7px;
 }
 
-.dropdown-menu::after {
+.dropdown-user-menu::after {
   content: "";
   position: absolute;
   /* top: 50%; */
@@ -232,16 +255,38 @@ nav li:first-child {
 .dropdown-list {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7px;
 }
 
-.dropdown-menu.open-dropdown-user {
+.dropdown-item>a,
+.dropdown-item>button {
+  border-radius: 7px;
+  padding: 5px 7px;
+  width: 100%;
+  color: rgb(126, 113, 87);
+  font-size: 1rem;
+}
+
+.dropdown-item>a:hover,
+.dropdown-item>button:hover {
+  background-color: #dfddda;
+  color: rgb(182, 126, 5);
+}
+
+.nav-user-email {
+  color: rgb(136, 91, 2);
+}
+
+.dropdown-user-menu.open-dropdown-user {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
   transition: all 0.3s ease;
 }
 
-.dropdown-menu.none-open-dropdown-user {
+.dropdown-user-menu.none-open-dropdown-user {
   opacity: 0;
   visibility: hidden;
   transform: translateY(-20px);

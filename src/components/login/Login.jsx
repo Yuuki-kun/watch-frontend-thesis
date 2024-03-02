@@ -77,7 +77,7 @@ const Login = () => {
 
           localStorage.setItem("refreshToken", response_data?.refresh_token);
 
-          navigate(from, { replace: true });
+          navigate("/checkout", { replace: true });
         } catch (err) {
           console.error(err);
         }
@@ -222,7 +222,13 @@ const Login = () => {
             Need an account?
             <br />
             <span className="line">
-              <Link to="/register" state={{ from: location.state?.from }}>
+              <Link
+                to="/register"
+                state={{
+                  from: location.state?.from,
+                  method: location.state?.method,
+                }}
+              >
                 Sign Up
               </Link>
             </span>

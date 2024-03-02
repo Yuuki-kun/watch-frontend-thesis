@@ -112,37 +112,74 @@ const Register = () => {
   };
 
   const { auth, setAuth } = useAuth();
-
   //register
   const register = async (e) => {
     console.log("resu=" + registerUser);
     setStartListener(true);
     e.preventDefault();
     setAuth({});
-    try {
-      const response_data = await RegisterService(registerUser);
-      console.log(response_data);
+    if (location?.state?.method === "checkout") {
+      try {
+        const tempoCartId = localStorage.getItem("tempo-cart");
 
-      handleAuthAndLocalStorage(response_data, setAuth);
+        const response_data = await RegisterService(
+          registerUser,
+          "checkout",
+          tempoCartId
+        );
+        console.log(response_data);
 
-      // setRegisterUser({
-      //   firstName: "",
-      //   lastName: "",
-      //   email: "",
-      //   password: "",
-      //   role: "USER",
-      // });
+        handleAuthAndLocalStorage(response_data, setAuth);
 
-      // setSuccess(true);
+        // setRegisterUser({
+        //   firstName: "",
+        //   lastName: "",
+        //   email: "",
+        //   password: "",
+        //   role: "USER",
+        // });
 
-      setErrMsg(
-        // "Registration success, please check out your email to active your account!"
-        "Registration success!"
-      );
-      errorRef.current.focus();
-    } catch (error) {
-      handleRegistrationErrors(error, setErrMsg, errorRef);
+        // setSuccess(true);
+
+        setErrMsg(
+          // "Registration success, please check out your email to active your account!"
+          "Registration success!"
+        );
+        errorRef.current.focus();
+      } catch (error) {
+        handleRegistrationErrors(error, setErrMsg, errorRef);
+      }
+    } else {
+      try {
+        const response_data = await RegisterService(
+          registerUser,
+          "normal",
+          "-1"
+        );
+        console.log(response_data);
+
+        handleAuthAndLocalStorage(response_data, setAuth);
+
+        // setRegisterUser({
+        //   firstName: "",
+        //   lastName: "",
+        //   email: "",
+        //   password: "",
+        //   role: "USER",
+        // });
+
+        // setSuccess(true);
+
+        setErrMsg(
+          // "Registration success, please check out your email to active your account!"
+          "Registration success!"
+        );
+        errorRef.current.focus();
+      } catch (error) {
+        handleRegistrationErrors(error, setErrMsg, errorRef);
+      }
     }
+
     console.log(errMsg);
   };
 
@@ -166,7 +203,7 @@ const Register = () => {
   const handleAuthAndLocalStorage = (response_data, setAuth) => {
     setAuth({
       email: registerUser.email,
-      role: response_data?.roles,
+      roles: response_data?.roles,
       accessToken: response_data?.access_token,
       userId: response_data?.userId,
       cartId: response_data?.cartId,
@@ -178,6 +215,8 @@ const Register = () => {
   //register
 
   const location = useLocation();
+  console.log(location.state?.method);
+
   const from = location.state?.from?.pathname || "/";
   const navigate = useNavigate();
   console.log("from=" + from);

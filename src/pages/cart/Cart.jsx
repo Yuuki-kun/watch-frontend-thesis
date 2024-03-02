@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import { FaCartPlus } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
-
+import { GoArrowRight } from "react-icons/go";
 import "./cart.css";
 import useCart from "../../hooks/useCart";
 import {
@@ -216,6 +216,7 @@ const Cart = () => {
                 disabled={checkoutList?.length <= 0}
               >
                 Thanh toán/Mua hàng
+                <GoArrowRight size={22} />
               </button>
             </div>
           </div>

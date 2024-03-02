@@ -6,7 +6,7 @@ const Login = React.lazy(() => import("../components/login/Login"));
 const Home = React.lazy(() => import("../pages/home/Home"));
 const Register = React.lazy(() => import("../components/register/Register"));
 const Register2 = React.lazy(() => import("../components/register/Register2"));
-const UserInfo = React.lazy(() => import("../components/user-info/UserInfo"));
+const User = React.lazy(() => import("../pages/users/User"));
 const Favorite = React.lazy(() => import("../pages/favorite/Favorite"));
 const DashBoard = React.lazy(() =>
   import("../components/admin/dashboard/DashBoard")
@@ -39,7 +39,7 @@ export const publicRoutesNoLayout = [
 ];
 
 export const userPrivateRoutes = [
-  { path: "user-info", component: UserInfo },
+  { path: "user-info", component: User },
   { path: "favorite", component: Favorite },
 ];
 

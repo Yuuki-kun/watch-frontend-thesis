@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import useLogout from "../../hooks/useLogout";
+import usePrivateRequest from "../../hooks/usePrivateRequest";
 
 const TestNav = () => {
   const { auth } = useAuth();
@@ -64,6 +65,9 @@ const TestNav = () => {
     const fixed_nav = document.querySelector(".nav-s");
     fixed_nav?.classList?.toggle("active", window.scrollY > 75);
 
+    const fixed_head_info = this.document.querySelector(".head-infor");
+    fixed_head_info?.classList?.toggle("hide", this.window.scrollY > 75);
+
     const scrolled_search = document.querySelector(".search-container");
     scrolled_search?.classList?.toggle(
       "scrolled-search-active",
@@ -95,6 +99,25 @@ const TestNav = () => {
   };
   const location = useLocation();
 
+  const [cusName, setCusName] = useState(null);
+  const axiosPrivate = usePrivateRequest();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axiosPrivate.get(`/api/v1/user/name/${auth?.email}`);
+        setCusName(res.data);
+        console.log(res.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    if (auth.email !== undefined) {
+      fetchData(); // Gọi hàm async fetchData để lấy dữ liệu
+    }
+  }, [auth.mail]);
+
+  console.log(cusName);
   return (
     <>
       <nav className="nav-s">
@@ -194,37 +217,32 @@ const TestNav = () => {
               >
                 <FaRegUser className="navbar-icon" />
               </button>
+              <span>{cusName}</span>
+
               <div
                 ref={userMenuRef}
-                className={`dropdown-menu ${
+                className={`dropdown-user-menu ${
                   openDropdownUser
                     ? "open-dropdown-user"
                     : "none-open-dropdown-user"
                 }`}
               >
                 <h3>
-                  User <span style={{ fontSize: "1rem" }}>{auth?.email}</span>
+                  <span className="nav-user-email" style={{ fontSize: "1rem" }}>
+                    {auth?.email}
+                  </span>
                 </h3>
                 <ul className="dropdown-list">
                   {auth?.email ? (
                     <>
                       <li className="dropdown-item">
-                        <button onClick={() => signout()}>logout</button>
+                        <Link to={"/user-info"}>Thông tin tài khoản</Link>
                       </li>
                       <li className="dropdown-item">
                         <Link to={"/favorite"}>Danh sách yêu thích</Link>
                       </li>
                       <li className="dropdown-item">
-                        <p>item 1</p>
-                      </li>
-                      <li className="dropdown-item">
-                        <p>item 1</p>
-                      </li>
-                      <li className="dropdown-item">
-                        <p>item 1</p>
-                      </li>
-                      <li className="dropdown-item">
-                        <p>item 1</p>
+                        <button onClick={() => signout()}>logout</button>
                       </li>
                     </>
                   ) : (
