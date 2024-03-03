@@ -148,6 +148,7 @@ p {
 }
 
 .address-content {
+    position: relative;
     background-color: #fff;
     padding: 10px 20px;
     margin-bottom: 1rem;
@@ -180,4 +181,12 @@ p {
 .address-label {
     font-size: .9rem;
     color: #565656;
+}
+
+.default-address {
+    color: rgb(5, 197, 5);
+    font-size: .8rem;
+    position: absolute;
+    right: 20px;
+    font-style: italic;
 }

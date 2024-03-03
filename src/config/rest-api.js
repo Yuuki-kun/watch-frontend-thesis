@@ -19,3 +19,5 @@ export const ADD_FAVORITE_LIST = "/api/v1/favorite/add-to-favorite-list";
 export const REMOVE_FAVORITE_LIST = "/api/v1/favorite";
 
 export const GET_USER_INFO = "/api/v1/user/cus-info";
+export const GET_USER_ADDRESS = "/api/v1/user/cus-address";
+export const UPDATE_DEFAULT_ADDRESS = "/api/v1/user/cus-address/default";

@@ -15,6 +15,7 @@ const Cart = React.lazy(() => import("../pages/cart/Cart"));
 const Users = React.lazy(() => import("../components/admin/Users"));
 const ProductView = React.lazy(() => import("../pages/products/ProductView"));
 
+const CheckOut = React.lazy(() => import("../pages/checkout/CheckOut"));
 export const publicRoutes = [
   { path: "/", component: Home },
   { path: "test", component: TestPage },
@@ -41,6 +42,7 @@ export const publicRoutesNoLayout = [
 export const userPrivateRoutes = [
   { path: "user-info", component: User },
   { path: "favorite", component: Favorite },
+  { path: "checkout", component: CheckOut },
 ];
 
 export const adminPrivateRoutes = [

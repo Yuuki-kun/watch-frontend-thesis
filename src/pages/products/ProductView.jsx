@@ -820,7 +820,7 @@ const ProductView = () => {
                         <FaUser />
                       </div>
                       <span className="rv-customer-name">
-                        {rv.customerDto.firstName} {rv.customerDto.lastName}
+                        {rv?.customerDto?.firstName} {rv?.customerDto?.lastName}
                       </span>
                     </div>
                     <div className="review-contents col-10">
@@ -862,8 +862,8 @@ const ProductView = () => {
                               <FaUser />
                             </div>
                             <span className="replies-customer-name">
-                              {crv.customerDto.firstName}{" "}
-                              {crv.customerDto.lastName} |
+                              {crv?.customerDto?.firstName}{" "}
+                              {crv?.customerDto?.lastName} |
                             </span>
                             <span className="replies-customer-name">
                               {new Date(crv.datePosted).toLocaleString()}

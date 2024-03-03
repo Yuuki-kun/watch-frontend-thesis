@@ -66,6 +66,9 @@ const OverviewContent = () => {
         {customerInfo.shippingAddresses &&
           customerInfo.shippingAddresses.map((address, idx) => (
             <div className="address-content" key={idx}>
+              <span className="default-address">
+                {address.isDefault ? "Địa chỉ mặc định" : ""}
+              </span>
               <p className="user-info-fullname">{address.name}</p>
               <span className="address-type">
                 {address.type === "PRIVATE" ? "Nhà Riêng" : "Công Ty/Tổ Chức"}

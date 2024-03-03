@@ -69,3 +69,20 @@ export const controlQtyService = async (cartId, itemId, method) => {
     console.error(err);
   }
 };
+
+/**
+ *
+ * @param {*} ids list of order details id
+ */
+export const getCartItemsWithListId = async (ids, axiosPrivate) => {
+  try {
+    const response = await axiosPrivate.post(
+      "/api/v1/user-cart/checkout-items",
+      ids
+    );
+    return response.data;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};

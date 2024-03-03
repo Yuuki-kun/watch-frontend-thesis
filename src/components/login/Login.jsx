@@ -77,7 +77,10 @@ const Login = () => {
 
           localStorage.setItem("refreshToken", response_data?.refresh_token);
 
-          navigate("/checkout", { replace: true });
+          navigate("/checkout", {
+            state: { method: "checkout" },
+            replace: true,
+          });
         } catch (err) {
           console.error(err);
         }
