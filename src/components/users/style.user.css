@@ -29,6 +29,7 @@
     flex-wrap: nowrap;
 }
 
+
 .option-button:hover {
     border: 1px solid #7b7b7b;
 }
@@ -42,4 +43,141 @@
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+.ui-content {
+    padding: 20px;
+    display: block;
+}
+
+.overview-info {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.overview-user-avatar {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    border-radius: 50%;
+    margin-right: 20px;
+    /* border: px solid rgba(0, 0, 0, .3); */
+    box-shadow: 0 0 6px 2px rgba(0, 0, 0, .3);
+}
+
+.user-avatar-img {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.user-username-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+}
+
+.change-info-button {
+    margin-left: .8rem;
+    border: none;
+    background-color: transparent;
+    border-radius: 5px;
+    width: 40px;
+    height: 30px;
+    border: 1px solid transparent;
+    padding: 2px 4px;
+    transition: all .2s ease;
+}
+
+.change-info-button:hover {
+    background-color: #fff;
+    color: #1131c4;
+    border: 1px solid #8c8c8c;
+
+}
+
+.user-info-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #000;
+    text-transform: capitalize;
+}
+
+h2,
+p {
+    margin: 0;
+}
+
+.user-join-date {
+    font-size: .8rem;
+    color: #636363;
+    font-style: italic;
+}
+
+.user-join-date.full-year {
+
+    font-weight: 600;
+}
+
+.line-container {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.user-address-book {}
+
+.add-address-button {
+    background-color: transparent;
+    border: none;
+    font-size: .85rem;
+    color: #153ce9;
+    text-transform: capitalize;
+    margin-bottom: .5rem;
+}
+
+.address-content {
+    background-color: #fff;
+    padding: 10px 20px;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, .1);
+}
+
+.user-info-fullname {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #000;
+    text-transform: uppercase;
+}
+
+.address-type {
+    font-size: .9rem;
+    color: #565656;
+    text-transform: capitalize;
+    /* margin-left: .5rem; */
+    color: green;
+    font-weight: 500;
+}
+
+.user-info-address {
+    font-size: .9rem;
+    margin-top: .3rem;
+}
+
+.address-label {
+    font-size: .9rem;
+    color: #565656;
 }

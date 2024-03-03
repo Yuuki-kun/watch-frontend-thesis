@@ -100,12 +100,15 @@ const TestNav = () => {
   const location = useLocation();
 
   const [cusName, setCusName] = useState(null);
+  const [cusAvatar, setCusAvatar] = useState(null);
+
   const axiosPrivate = usePrivateRequest();
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await axiosPrivate.get(`/api/v1/user/name/${auth?.email}`);
-        setCusName(res.data);
+        setCusName(res.data.fullName);
+        setCusAvatar(res.data.avatar);
         console.log(res.data);
       } catch (err) {
         console.error(err);
@@ -115,7 +118,7 @@ const TestNav = () => {
     if (auth.email !== undefined) {
       fetchData(); // Gọi hàm async fetchData để lấy dữ liệu
     }
-  }, [auth.mail]);
+  }, [auth.email]);
 
   console.log(cusName);
   return (
@@ -215,7 +218,11 @@ const TestNav = () => {
                 className="menu-trigger-user"
                 onClick={() => setOpenDropdownUser(!openDropdownUser)}
               >
-                <FaRegUser className="navbar-icon" />
+                {auth.email && cusAvatar !== null ? (
+                  <img src={cusAvatar} alt="avt" className="user-avatar" />
+                ) : (
+                  <FaRegUser className="navbar-icon" />
+                )}
               </button>
               <span>{cusName}</span>
 

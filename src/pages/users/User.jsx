@@ -10,6 +10,8 @@ import { IoNewspaperOutline } from "react-icons/io5";
 import { GoHeart } from "react-icons/go";
 import { IoMdSettings } from "react-icons/io";
 import { SlLocationPin } from "react-icons/sl";
+import { Content } from "antd/es/layout/layout";
+import OverviewContent from "../../components/users/OverviewContent";
 
 const User = () => {
   const [cusName, setCusName] = useState(null);
@@ -19,7 +21,7 @@ const User = () => {
     const fetchData = async () => {
       try {
         const res = await axiosPrivate.get(`/api/v1/user/name/${auth?.email}`);
-        setCusName(res.data);
+        setCusName(res.data.fullName);
         console.log(res.data);
       } catch (err) {
         console.error(err);
@@ -108,7 +110,13 @@ const User = () => {
 
           <button className="option-button logout">Đăng Xuất</button>
         </div>
-        <div className="right-content">b</div>
+        <div className="right-content">
+          {selected === 1 && <OverviewContent />}
+          {selected === 2 && <OverviewContent />}
+          {selected === 3 && <OverviewContent />}
+          {selected === 4 && <OverviewContent />}
+          {selected === 5 && <OverviewContent />}
+        </div>
       </div>
     </section>
   );
