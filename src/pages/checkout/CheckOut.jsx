@@ -70,7 +70,10 @@ const CheckOut = () => {
   const changeDefaultAddress = () => {
     openModal();
   };
-
+  //after user selects checkout method, the order entity will be created) and set
+  //the new cart items to the new order entity, then redirect user to the check out page
+  // if checkout success => redirect to success page
+  // else => redirect to error page
   return (
     <section className="address-section">
       <ChangeAddressModal
