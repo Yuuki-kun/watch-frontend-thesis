@@ -131,6 +131,11 @@
     transition: all 0.2s ease;
 }
 
+.stripe-btn.in-checkout-progress {
+    background-color: #100c43;
+}
+
+
 .order-items {
     border: 1px solid #e5e5e5;
     border-radius: 10px;

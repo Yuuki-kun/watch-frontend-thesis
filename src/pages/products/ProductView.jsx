@@ -262,6 +262,8 @@ const ProductView = () => {
       </div>
     );
 
+  console.log(watchDetails);
+
   const addToBag = async () => {
     setIsAddingToBag(true);
     // Check if auth and watchDetails are defined
@@ -270,7 +272,7 @@ const ProductView = () => {
         const response = await addToBagService(
           auth.cartId,
           watchDetails.id,
-          watchDetails.price,
+          watchDetails.defaultPrices,
           1
         );
         setTimeout(() => {
@@ -296,7 +298,7 @@ const ProductView = () => {
             const response = await addToBagService(
               cart_id,
               watchDetails.id,
-              watchDetails.price,
+              watchDetails.defaultPrices,
               1
             );
             setTimeout(() => {
@@ -313,7 +315,7 @@ const ProductView = () => {
           const response = await addToBagService(
             cartId,
             watchDetails.id,
-            watchDetails.price,
+            watchDetails.defaultPrices,
             1
           );
           setTimeout(() => {

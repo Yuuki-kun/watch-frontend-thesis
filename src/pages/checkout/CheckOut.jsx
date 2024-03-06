@@ -6,6 +6,7 @@ import usePrivateRequest from "../../hooks/usePrivateRequest";
 import { useLocation } from "react-router-dom";
 import { getCartItemsWithListId } from "../../api/services/cartService";
 import ChangeAddressModal from "../../components/modal/ChangeAddressModal";
+import createCheckoutSession from "../../api/services/checkoutService";
 const CheckOut = () => {
   const { auth } = useAuth();
   const axiosPrivate = usePrivateRequest();
@@ -74,6 +75,24 @@ const CheckOut = () => {
   //the new cart items to the new order entity, then redirect user to the check out page
   // if checkout success => redirect to success page
   // else => redirect to error page
+  const [isHandling, setIsHandling] = useState(false);
+  const checkOutStripeHandle = async () => {
+    setIsHandling(true);
+    console.log(items);
+    try {
+      const response = await createCheckoutSession(
+        auth?.userId,
+        items,
+        axiosPrivate
+      );
+      setIsHandling(false);
+      window.location.href = response;
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <section className="address-section">
       <ChangeAddressModal
@@ -184,8 +203,14 @@ const CheckOut = () => {
                     </span>
                     <span className="line"></span>
                   </div>
-                  <button id="checkout-button" className="ck-btn stripe-btn">
-                    Thanh Toán Với Stripe
+                  <button
+                    id="checkout-button"
+                    className={`ck-btn stripe-btn ${
+                      isHandling && "in-checkout-progress"
+                    }`}
+                    onClick={checkOutStripeHandle}
+                  >
+                    {isHandling ? "Waiting..." : "Thanh Toán Với Stripe"}
                   </button>
                 </div>
               </div>
