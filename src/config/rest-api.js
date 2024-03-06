@@ -23,3 +23,4 @@ export const GET_USER_ADDRESS = "/api/v1/user/cus-address";
 export const UPDATE_DEFAULT_ADDRESS = "/api/v1/user/cus-address/default";
 
 export const CREATE_ORDER = "/api/v1/checkout/create-payment-session";
+export const GET_ORDERS = "/api/v1/user/cus-orders";

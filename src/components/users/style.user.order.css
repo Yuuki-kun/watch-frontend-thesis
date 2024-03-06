@@ -1,0 +1,219 @@
+.user-orders-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    /* justify-content: center; */
+    padding: 20px;
+    gap: 15px;
+}
+
+.u-order-options {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.u-order-options button {
+    flex: 1;
+    font-size: .9rem;
+    border: 1px solid #cecece;
+    border-radius: 5px;
+    color: black;
+    background-color: #fff;
+    height: 30px;
+    transition: all .2s ease;
+}
+
+.u-order-search-container {
+    display: flex;
+    width: 100%;
+    height: 35px;
+    position: relative;
+}
+
+.u-order-search {
+    /* width: 100%; */
+    flex: 1;
+    height: 35px;
+    border-radius: 5px;
+    border: 1px solid #cececece;
+    font-size: .9rem;
+    padding-left: 10px;
+    color: #515151;
+    transition: all .2s ease;
+    padding-right: 95px;
+
+}
+
+.u-order-search:focus {
+    outline: none;
+    border: 1.1px solid #156eb8;
+    box-shadow: 0 1px 5px 1px rgba(21, 120, 177, 0.3);
+
+}
+
+.u-order-search-btn {
+    width: 90px;
+    height: 80%;
+    background-color: transparent;
+    border: none;
+    color: #515151;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: all .2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .95rem;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    /* border-left: 1px solid #999999; */
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+    margin-right: .25rem;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.u-order-search-btn:hover {
+    background-color: #3e5ad7;
+    color: #fff !important;
+}
+
+.u-order-search-btn::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0;
+    height: 100%;
+    z-index: -1;
+    background: linear-gradient(to right, #5f77ff, #0c1e85);
+    /* border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px; */
+    border-radius: 5px;
+}
+
+@keyframes moveFromRightToLeft {
+    0% {
+        right: 0;
+        width: 0;
+    }
+
+    50% {
+        right: 0;
+        width: 100%;
+    }
+
+    100% {
+        right: 100%;
+        width: 0;
+
+        border-left: 1.5px solid blue;
+        background: linear-gradient(to right, #5f77ff, #0c1e85);
+
+    }
+}
+
+.u-order-search:focus+.u-order-search-btn::before {
+    animation: moveFromRightToLeft 1s forwards;
+}
+
+
+.u-order-search:focus+.u-order-search-btn {
+    animation: changeColor 1s forwards;
+}
+
+
+@keyframes changeColor {
+    0% {
+        color: #515151;
+    }
+
+    50% {
+        color: #fff;
+    }
+
+    100% {
+        color: #3e5ad7;
+    }
+}
+
+.u-order-details-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: 15px;
+}
+
+.u-order-content {
+    width: 100%;
+    /* flex: 1; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: #fff;
+    padding: 5px 10px;
+    border: 1px solid #cecece;
+    border-radius: 10px;
+}
+
+.u-order-content-row {
+    padding: 7px 15px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    gap: 10px;
+}
+
+.u-o-img {
+    width: 100px;
+    height: auto;
+    margin-right: 1rem;
+}
+
+.u-o-price {
+    margin-left: auto;
+}
+
+.u-order-total-price {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+    width: 100%;
+    gap: 5px;
+}
+
+.u-order-total-price .u-o-row-btn {
+    width: auto;
+    height: 35px;
+    padding: 5px 12px;
+    border: 1px solid #909090;
+    background-color: #fff;
+    border-radius: 10px;
+    margin-left: 5px;
+    color: rgb(59, 59, 59);
+    transition: all .5s ease;
+    font-size: .9rem;
+    margin-bottom: .5rem;
+}
+
+.u-order-total-price .u-o-row-btn:hover {
+
+    background-color: black;
+    color: #fff;
+
+}

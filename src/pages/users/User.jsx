@@ -12,6 +12,7 @@ import { IoMdSettings } from "react-icons/io";
 import { SlLocationPin } from "react-icons/sl";
 import { Content } from "antd/es/layout/layout";
 import OverviewContent from "../../components/users/OverviewContent";
+import UserOrders from "../../components/users/UserOrders";
 
 const User = () => {
   const [cusName, setCusName] = useState(null);
@@ -33,7 +34,7 @@ const User = () => {
     }
   }, [auth.mail]);
 
-  const [selected, setSelected] = useState(1);
+  const [selected, setSelected] = useState("overview");
 
   return (
     <section>
@@ -45,7 +46,7 @@ const User = () => {
           <MenuOption
             caption={"Tổng Quan"}
             content={"Tổng Quan"}
-            keys={1}
+            optionKey={"overview"}
             selected={selected}
             setSelected={setSelected}
             icon={<FaRegUser size={17} />}
@@ -53,7 +54,7 @@ const User = () => {
           <MenuOption
             caption={"Thông Báo"}
             content={"Thông Báo Của Tôi"}
-            keys={2}
+            optionKey={"notification"}
             selected={selected}
             setSelected={setSelected}
             icon={<FaRegBell size={17} />}
@@ -62,7 +63,7 @@ const User = () => {
           <MenuOption
             caption={"Quản Lý Đơn Hàng"}
             content={"Danh Sách Đơn Hàng"}
-            keys={3}
+            optionKey={"orders"}
             selected={selected}
             setSelected={setSelected}
             icon={<FiBox size={17} />}
@@ -70,14 +71,14 @@ const User = () => {
           <MenuOption
             caption={"Đánh Giá"}
             content={"Đánh Giá Sản Phẩm"}
-            keys={4}
+            optionKey={"reviews"}
             selected={selected}
             setSelected={setSelected}
             icon={<BiCommentEdit size={17} />}
           />
           <MenuOption
             content={"Nhận Xét Của Tôi"}
-            keys={5}
+            optionKey={"comments"}
             selected={selected}
             setSelected={setSelected}
             icon={<IoNewspaperOutline size={17} />}
@@ -86,7 +87,7 @@ const User = () => {
           <MenuOption
             caption={"Sản Phẩm Yêu Thích"}
             content={"Danh Sách Yêu Thích"}
-            keys={6}
+            optionKey={"favorite"}
             selected={selected}
             setSelected={setSelected}
             icon={<GoHeart size={17} />}
@@ -94,7 +95,7 @@ const User = () => {
           <MenuOption
             caption={"Cài Đặt"}
             content={"Tài Khoản"}
-            keys={7}
+            optionKey={"settings"}
             selected={selected}
             setSelected={setSelected}
             icon={<IoMdSettings size={17} />}
@@ -102,7 +103,7 @@ const User = () => {
 
           <MenuOption
             content={"Địa Chỉ Của Tôi"}
-            keys={8}
+            optionKey={"addresses"}
             selected={selected}
             setSelected={setSelected}
             icon={<SlLocationPin size={17} />}
@@ -111,9 +112,9 @@ const User = () => {
           <button className="option-button logout">Đăng Xuất</button>
         </div>
         <div className="right-content">
-          {selected === 1 && <OverviewContent />}
+          {selected === "overview" && <OverviewContent />}
           {selected === 2 && <OverviewContent />}
-          {selected === 3 && <OverviewContent />}
+          {selected === "orders" && <UserOrders />}
           {selected === 4 && <OverviewContent />}
           {selected === 5 && <OverviewContent />}
         </div>

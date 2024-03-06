@@ -17,9 +17,9 @@ const MenuOption = (props) => {
       <div className="option-btn-container">
         <button
           className={`option-button ${
-            props.selected === props.keys ? "selected" : ""
+            props.selected === props.optionKey ? "selected" : ""
           }`}
-          onClick={() => props.setSelected(props.keys)}
+          onClick={() => props.setSelected(props.optionKey)}
         >
           <div className="content">
             {props.icon}
