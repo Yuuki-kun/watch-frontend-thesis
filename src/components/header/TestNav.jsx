@@ -123,7 +123,7 @@ const TestNav = () => {
   console.log(cusName);
   return (
     <>
-      <nav className="nav-s">
+      <nav className="user-nav nav-s">
         <ul className={`sideBar ${showSideBar ? "open" : "none"}`}>
           <li>
             <a href="#"> Blogs </a>

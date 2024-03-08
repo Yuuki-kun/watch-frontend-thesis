@@ -26,7 +26,7 @@ export const publicRoutes = [
 
 export const publicRoutesNoLayout = [
   {
-    path: "login",
+    path: "/login",
     component: Login,
   },
   {
@@ -47,7 +47,7 @@ export const userPrivateRoutes = [
 ];
 
 export const adminPrivateRoutes = [
-  { path: "", component: DashBoard },
-  { path: "db", component: DashBoard },
+  { path: "/", component: DashBoard },
+  { path: "dashboard", component: DashBoard },
   { path: "users", component: Users },
 ];

@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Login from "./components/login/Login";
-import AdminLayout from "./layout/AdminLayout";
+import AdminLayout from "./layout/admin/AdminLayout";
 import UserLayout from "./layout/UserLayout";
 import Register from "./components/register/Register";
 import CreateRoutesFromList from "./components/routes/CreateRoutesFromList";
@@ -37,13 +37,13 @@ function App() {
         </Route>
 
         {/* admin routes */}
-        <Route element={<Persist />}>
-          <Route path="/admin/" element={<AdminLayout />}>
+        {/* <Route element={<Persist />}>
+          <Route path="/admin" element={<AdminLayout />}>
             <Route element={<RequireAuth allowedRoles={[9012]} />}>
               {CreateRoutesFromList(adminPrivateRoutes)}
             </Route>
           </Route>
-        </Route>
+        </Route> */}
 
         <Route path="*" element={<Missing />} />
       </Routes>

@@ -29,7 +29,7 @@
   background-color: rgba(255, 255, 255, 0.9);
 }
 
-nav {
+.user-nav {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   height: 80px;
@@ -40,15 +40,15 @@ nav {
   /* position: relative; */
 }
 
-nav.nav-shadow-scroll {
+.user-nav .nav-shadow-scroll {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-nav.nav-shadow-normal {
+.user-nav .nav-shadow-normal {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-nav ul {
+.user-nav ul {
   width: 100%;
   list-style: none;
   display: flex;
@@ -58,13 +58,13 @@ nav ul {
   margin-bottom: 0;
 }
 
-nav li {
+.user-nav li {
   height: 70%;
   padding-right: 0.5rem;
 }
 
-nav a,
-nav button {
+.user-nav a,
+.user-nav button {
   height: 100%;
   padding: 0 30px;
   text-decoration: none;
@@ -73,20 +73,20 @@ nav button {
   color: #000;
 }
 
-nav button {
+.user-nav button {
   background-color: #fff;
   border: none;
 }
 
-nav a:hover {
+.user-nav a:hover {
   background-color: #f0f0f0f0;
 }
 
-nav li:first-child {
+.user-nav li:first-child {
   margin-right: auto;
 }
 
-.sideBar {
+.user-nav .sideBar {
   position: fixed;
   top: 100px;
   right: 0;
@@ -104,9 +104,9 @@ nav li:first-child {
   transition: width 0.3s ease;
 }
 
-.sideBar.open {
+.user-nav .sideBar.open {
   /* height: 100vh; */
-  width: 250px;
+  width: 100%;
 }
 
 .none {
@@ -114,12 +114,12 @@ nav li:first-child {
   /* height: 100vh; */
 }
 
-.sideBar li {
+.user-nav .sideBar li {
   width: 100%;
 }
 
-.sideBar a,
-.sideBar button {
+.user-nav .sideBar a,
+.user-nav .sideBar button {
   width: 100%;
 }
 
@@ -128,7 +128,7 @@ nav li:first-child {
 }
 
 @media screen and (max-width: 800px) {
-  .hide-on-mobile {
+  .user-nav .hide-on-mobile {
     display: none;
   }
 
@@ -138,7 +138,7 @@ nav li:first-child {
 }
 
 @media screen and (max-width: 400px) {
-  .sideBar.open {
+  .user-nav .sideBar.open {
     width: 100%;
   }
 }

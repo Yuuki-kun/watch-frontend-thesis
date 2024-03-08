@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
+
+
 * {
     margin: 0;
     padding: 0;
@@ -7,7 +10,49 @@
 body {
     min-height: 100%;
     background-color: #fff;
+    font-family: 'Source Sans 3', sans-serif;
 }
+
+html,
+body,
+#root,
+.admin-app,
+.content {
+    height: 100%;
+    width: 100%;
+    font-family: 'Source Sans 3', sans-serif;
+}
+
+/* for admin layout */
+.admin-app {
+    display: flex;
+    position: relative;
+}
+
+/* for admin layout */
+
+/* scroll bar */
+::-webkit-scrollbar {
+    width: 8px;
+
+}
+
+/* track */
+::-webkit-scrollbar-track {
+    background: #e0e0e0;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* scroll bar */
+
+
 
 .ReactModal__Overlay.ReactModal__Overlay--after-open {
     z-index: 1001 !important;

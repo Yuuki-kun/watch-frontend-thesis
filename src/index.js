@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
 import App from "./App";
+import AdminApp from "./AdminApp";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { AuthProvider } from "./context/AuthProvider";
 import { CartProvider } from "./context/CartPovider";
@@ -17,6 +18,7 @@ root.render(
       <CartProvider>
         <Routes>
           <Route path="/*" element={<App />} />
+          <Route path="/admin/*" element={<AdminApp />} />
         </Routes>
       </CartProvider>
     </AuthProvider>
