@@ -149,6 +149,10 @@ const Register = () => {
       } catch (error) {
         handleRegistrationErrors(error, setErrMsg, errorRef);
       }
+      navigate("/checkout", {
+        state: { method: "checkout" },
+        replace: true,
+      });
     } else {
       try {
         const response_data = await RegisterService(

@@ -158,6 +158,10 @@ const Cart = () => {
   const handleCheckout = () => {
     if (auth.userId) {
       console.log("auth");
+      navigate("/checkout", {
+        state: { method: "checkout" },
+        replace: true,
+      });
     } else {
       console.log("no login");
       navigate("/login", {
