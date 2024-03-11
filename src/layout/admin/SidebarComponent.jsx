@@ -117,16 +117,16 @@ const SidebarComponent = () => {
             </Box>
           )}
 
-          {/* <Box paddingLeft={isCollapsed ? undefined : "10%"}>
+          <Box paddingLeft={isCollapsed ? undefined : "10%"}>
             <Item
-              title="Dashboard"
-              to="/"
+              title="Orders"
+              to="orders"
               icon={<HomeOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
 
-            <Typography
+            {/* <Typography
               variant="h6"
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 20px" }}
@@ -218,8 +218,8 @@ const SidebarComponent = () => {
               icon={<MapOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
-            />
-          </Box> */}
+            /> */}
+          </Box>
         </Menu>
       </Sidebar>
     </Box>

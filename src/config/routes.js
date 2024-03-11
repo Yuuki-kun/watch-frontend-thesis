@@ -17,6 +17,10 @@ const ProductView = React.lazy(() => import("../pages/products/ProductView"));
 
 const CheckOut = React.lazy(() => import("../pages/checkout/CheckOut"));
 
+const OrderManagement = React.lazy(() =>
+  import("../components/admin/orders/OrderManagement")
+);
+
 export const publicRoutes = [
   { path: "/", component: Home },
   { path: "test", component: TestPage },
@@ -49,5 +53,6 @@ export const userPrivateRoutes = [
 export const adminPrivateRoutes = [
   { path: "/", component: DashBoard },
   { path: "dashboard", component: DashBoard },
+  { path: "orders", component: OrderManagement },
   { path: "users", component: Users },
 ];
