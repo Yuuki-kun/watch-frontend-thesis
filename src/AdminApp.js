@@ -5,10 +5,11 @@ import AdminLayout from "./layout/admin/AdminLayout";
 import RequireAuth from "./components/RequireAuth";
 import { adminPrivateRoutes } from "./config/routes";
 import { Suspense } from "react";
+import ClockLoader from "./components/ClockLoader";
 
 function AdminApp() {
   return (
-    <Suspense fallback={<div>Loading....</div>}>
+    <Suspense fallback={<ClockLoader />}>
       <Routes>
         {/* admin routes */}
         <Route element={<Persist />}>

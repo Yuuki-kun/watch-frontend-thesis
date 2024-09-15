@@ -30,7 +30,7 @@ const TopbarComponent = () => {
           <div className="al-user-role">Admin</div>
         </div>
       </div>
-      <div
+      {/* <div
         className="al-center-search-container"
         style={{ backgroundColor: `${colors.primary[400]}` }}
       >
@@ -38,9 +38,9 @@ const TopbarComponent = () => {
         <IconButton type="button" sx={{ p: 1 }}>
           <SearchIcon />
         </IconButton>
-      </div>
+      </div> */}
 
-      <div className="al-button-container">
+      {/* <div className="al-button-container">
         <IconButton
           type="button"
           sx={{ p: 1 }}
@@ -61,7 +61,7 @@ const TopbarComponent = () => {
         <IconButton type="button" sx={{ p: 1 }}>
           <PersonOutlinedIcon />
         </IconButton>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import "./login.css";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import axios from "../../api/axios";
 
 const Login = () => {
   const { setAuth, persist, setPersist } = useAuth();
@@ -151,6 +152,27 @@ const Login = () => {
     localStorage.setItem("persist", persist);
   }, [persist]);
 
+  const forgotPassword = async (e) => {
+    const inputValue = window.prompt("Nhập email đăng ký để nhận mật khẩu mới");
+    if (inputValue !== null) {
+      // Người dùng đã nhập một giá trị và nhấn OK
+      console.log("Input value:", inputValue);
+      try {
+        const res = await axios.post(
+          `/products/forgot-password?email=${inputValue}`
+        );
+        // console.log(res);
+        // const canceledOrder = res.data;
+        // alert("Hủy đơn hàng thành công");
+        alert("Vui lòng kiểm tra email để lấy mật khẩu mới");
+        window.location.href = "/login";
+      } catch (err) {
+        console.error(err);
+        alert("Gửi yêu cầu không thành công");
+      }
+    }
+  };
+
   return (
     <>
       <div className="container regis-page-container">
@@ -222,7 +244,10 @@ const Login = () => {
             </div>
           </form>
           <p>
+            <Link onClick={(e) => forgotPassword(e)}>Forgot Password?</Link>{" "}
+            <br />
             Need an account?
+            <br />
             <br />
             <span className="line">
               <Link

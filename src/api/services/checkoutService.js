@@ -1,12 +1,17 @@
 import { CREATE_ORDER } from "../../config/rest-api";
 
-const createCheckoutSession = async (userId, cartItems, axiosPrivate) => {
+const createCheckoutSession = async (
+  userId,
+  cartItems,
+  axiosPrivate,
+  pmethod
+) => {
   console.log(cartItems);
   //spit id from each cart item into a new list
   const orderDetailsId = JSON.parse(cartItems).map((item) => item.cartId);
   console.log(orderDetailsId);
   try {
-    const response = await axiosPrivate.post(CREATE_ORDER, {
+    const response = await axiosPrivate.post(`${CREATE_ORDER}/${pmethod}`, {
       customerId: userId,
       orderDetailsId,
     });

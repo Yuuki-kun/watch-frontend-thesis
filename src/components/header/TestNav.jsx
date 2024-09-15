@@ -5,15 +5,18 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import { IoSearch } from "react-icons/io5";
 import { FaRegUser } from "react-icons/fa6";
 import { useEffect, useRef, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import useLogout from "../../hooks/useLogout";
 import usePrivateRequest from "../../hooks/usePrivateRequest";
-
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import ImageSearchOutlinedIcon from "@mui/icons-material/ImageSearchOutlined";
+import Collections from "./Collections";
 const TestNav = () => {
   const { auth } = useAuth();
   const [showSideBar, setShowSidebar] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
   const inputSearchRef = useRef();
   const userMenuRef = useRef();
   const userIconRef = useRef();
@@ -121,9 +124,19 @@ const TestNav = () => {
   }, [auth.email]);
 
   console.log(cusName);
+  const navigate = useNavigate();
+
+  const goSearch = () => {
+    navigate(`/products-page?type=search&query=${searchValue}`);
+    setShowSearch(false);
+  };
+  const [openCollection, setOpenCollection] = useState(false);
   return (
     <>
-      <nav className="user-nav nav-s">
+      <nav
+        className="user-nav nav-s"
+        style={{ backgroundColor: "#f8f8f8 !important" }}
+      >
         <ul className={`sideBar ${showSideBar ? "open" : "none"}`}>
           <li>
             <a href="#"> Blogs </a>
@@ -168,35 +181,73 @@ const TestNav = () => {
             </Link>
           </li>
           <li className="hide-on-mobile">
-            <a href="#"> Men </a>
+            <Link to={"/products-page?type=fetch&cate=men&size=20&page=0"}>
+              {" "}
+              Men{" "}
+            </Link>
           </li>
           <li className="hide-on-mobile">
-            <a href="#"> Women </a>
+            <Link to={"/products-page?type=fetch&cate=women&size=20&page=0"}>
+              Women{" "}
+            </Link>
           </li>
-          <li className="hide-on-mobile">
-            <a href="#"> Collection </a>
+          <li
+            className="hide-on-mobile"
+            // style={{ position: "relative" }}
+          >
+            <a
+              onMouseEnter={() => setOpenCollection(true)}
+              // onMouseLeave={() => setOpenCollection(false)}
+              href="#"
+            >
+              {" "}
+              Collection{" "}
+            </a>
+            <div
+              className="product-collections-dropdown-container"
+              style={{
+                width: `100%`,
+                height: `${openCollection ? "600%" : "0"}`,
+                position: "absolute",
+                top: "100%",
+                left: "0%",
+                backgroundColor: "#fff",
+                transition: "height 0.2s ease",
+                zIndex: "1000 !important",
+                overflowY: "scroll",
+                boxShadow: "0px 5px 7px 2px rgba(0,0,0,0.1)",
+                borderBottom: "1px solid #f7f7f7",
+              }}
+              onMouseLeave={() => setOpenCollection(false)}
+            >
+              <Collections />
+            </div>
           </li>
-          <li className="hide-on-mobile">
-            <a href="#"> Blogs </a>
-          </li>
+
           <li className="hide-on-mobile">
             <div className="h-100 product-link-container">
-              <a className="product-link" href="#">
+              <Link
+                className="product-link"
+                to={"/products-page?type=fetch&cate=none&size=20&page=0"}
+              >
                 Products
-              </a>
-              <div className="product-link-dropdown-content">
+              </Link>
+              {/* <div className="product-link-dropdown-content">
                 <div>cate a</div>
                 <div>cate b</div>
                 <div>cate c</div>
                 <div>cate d</div>
-              </div>
+              </div> */}
             </div>
           </li>
           <li className="hide-on-mobile">
             <a href="#"> About </a>
           </li>
-          <li className="hide-on-mobile">
-            <a href="#"> Forum </a>
+          <li className="hide-on-mobile text-danger">
+            <a style={{ color: "red" }} href="#">
+              {" "}
+              Sale{" "}
+            </a>
           </li>
           <li
             className="hide-on-mobile"
@@ -217,9 +268,26 @@ const TestNav = () => {
                 ref={userIconRef}
                 className="menu-trigger-user"
                 onClick={() => setOpenDropdownUser(!openDropdownUser)}
+                style={{
+                  borderRadius: "20%",
+                  padding: "0px !important",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "100% !important",
+                }}
               >
                 {auth.email && cusAvatar !== null ? (
-                  <img src={cusAvatar} alt="avt" className="user-avatar" />
+                  <img
+                    src={`http://localhost:8080/image/fileSystem/avatar/${cusAvatar}`}
+                    alt="avt"
+                    className="user-avatar"
+                    style={{
+                      width: "40px",
+                      height: "40px",
+                      objectFit: "cover",
+                      maxWidth: "40px",
+                    }}
+                  />
                 ) : (
                   <FaRegUser className="navbar-icon" />
                 )}
@@ -243,7 +311,9 @@ const TestNav = () => {
                   {auth?.email ? (
                     <>
                       <li className="dropdown-item">
-                        <Link to={"/user-info"}>Thông tin tài khoản</Link>
+                        <Link to={"/user-info/overview"}>
+                          Thông tin tài khoản
+                        </Link>
                       </li>
                       <li className="dropdown-item">
                         <Link to={"/favorite"}>Danh sách yêu thích</Link>
@@ -284,15 +354,16 @@ const TestNav = () => {
         </ul>
         <div className={`search-container`}>
           <div className="input-container">
-            <input ref={inputSearchRef} type="text" />
-          </div>
-          <div className="recommend-category">
-            recommend links
-            <ul>
-              <li>login</li>
-              <li>a</li>
-              <li>a</li>
-            </ul>
+            <input
+              ref={inputSearchRef}
+              type="text"
+              placeholder="Bạn cần tìm kiếm gì?"
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+            />
+            <button className="search-string-btn" onClick={() => goSearch()}>
+              <SearchOutlinedIcon />
+            </button>
           </div>
         </div>
       </nav>

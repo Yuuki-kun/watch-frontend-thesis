@@ -211,6 +211,18 @@
     margin-bottom: .5rem;
 }
 
+.u-o-row-btn.cancel {
+    color: #ff0000;
+    border: 1px solid #ff0000;
+
+}
+
+.u-o-row-btn.cancel:hover {
+    background-color: #ff0000 !important;
+    /* color: black !important; */
+
+}
+
 .u-order-total-price .u-o-row-btn:hover {
 
     background-color: black;

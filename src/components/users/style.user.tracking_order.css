@@ -1,0 +1,132 @@
+.tracking-container {
+    padding-top: 5px;
+    padding-bottom: 0;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.link-grey:hover {
+    color: #000 !important;
+}
+
+.user-od-head-info {
+    /* margin-top: 10px; */
+    background-color: #fff;
+    padding: 10px 16px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.1);
+    border: 1px solid #cecece;
+}
+
+.user-od-shipment-info {
+    margin-top: 16px;
+    background-color: #fff;
+    padding: 10px 16px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.1);
+    border: 1px solid #cecece;
+}
+
+.shipment-icons-expl {
+    display: flex;
+    flex-direction: column;
+}
+
+.se-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+
+}
+
+.shipment-progress {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 2rem;
+}
+
+.sp-circle-stt {
+    width: 24px;
+    height: 24px;
+    background-color: #99adc4;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+}
+
+.sp-status-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.sp-status-container:first-child {
+    align-items: flex-start;
+}
+
+.sp-status-container:last-child {
+    align-items: flex-end;
+}
+
+.sp-status-line {
+    width: 100%;
+    height: 3px;
+    background-color: #99adc4;
+    border-radius: 5px;
+
+
+}
+
+
+
+.sp-circle-stt.sp-current-status,
+.sp-status-line.sp-current-status {
+    background-color: green;
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.sp-status-line.sp-current-status-progress::after,
+.sp-current-status.sp-current-status-progress::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, #36b836 0%, #0db00d 100%);
+    animation: fillAnimation 2s linear forwards;
+    z-index: 0;
+}
+
+@keyframes fillAnimation {
+    0% {
+        width: 0;
+    }
+
+    100% {
+        width: 100%;
+    }
+}
+
+.sp-content.sp-current-status {
+    color: green;
+}
+
+.od-curr-stt-desc {
+    margin-top: 1rem;
+    font-size: 16px;
+    font-weight: 500;
+    color: #000;
+    font-style: italic;
+}

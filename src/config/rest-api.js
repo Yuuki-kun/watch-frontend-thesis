@@ -24,7 +24,17 @@ export const UPDATE_DEFAULT_ADDRESS = "/api/v1/user/cus-address/default";
 
 export const CREATE_ORDER = "/api/v1/checkout/create-payment-session";
 export const GET_ORDERS = "/api/v1/user/cus-orders";
+export const RETRIEVE_ORDER = "/api/v1/orders/retrieve-order";
+
+//reviews
+export const ADD_MULTI_REVIEW = "/api/v1/reviews/create-multi-review";
+export const ADD_COMMENT = "/api/v1/reviews/reply-review";
 
 //admin
 export const GET_ALL_ORDERS = "/api/v1/admin/orders";
 export const CAPTURE_ORDER = "/api/v1/admin-order-mgt/capture";
+export const CHANGE_ORDER_STATUS = "/api/v1/admin-order-mgt/status";
+export const GET_USERS = "/api/v1/admin-users-mgt";
+export const GET_ALL_USERS_INFO = "/api/v1/admin-users-mgt/all-info";
+export const GET_ALL_PROMOTIONS = "api/v1/admin-promotions-mgt/get-promotions";
+export const CREATE_PROMOTION = "api/v1/admin-promotions-mgt/create-promotions";

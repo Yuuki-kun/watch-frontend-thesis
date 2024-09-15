@@ -15,6 +15,9 @@ const Header = ({ title }) => {
       >
         {title}
       </Typography>
+      {/* <Typography>
+        <span style={{ color: colors.grey[300] }}>Dashboard</span> / {title}
+      </Typography> */}
     </div>
   );
 };

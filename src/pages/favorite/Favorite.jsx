@@ -43,7 +43,7 @@ const Favorite = () => {
         const response = await addToBagService(
           auth.cartId,
           watchDetails.id,
-          watchDetails.price,
+          watchDetails.defaultPrices,
           1
         );
         notify(watchDetails.images[0].image);
@@ -60,12 +60,17 @@ const Favorite = () => {
         wid,
         axiosPrivate
       );
-      const updatedItems = fvrDetailList.filter((item) => item.id !== wid);
+      console.log(wid);
+      const updatedItems = fvrDetailList.filter(
+        (item) => item.watch.id !== wid
+      );
       setFvrDetailList(updatedItems);
     } catch (err) {
       console.error(err);
     }
   };
+
+  console.log(fvrDetailList);
 
   const notify = (wimg) =>
     toast.success(
@@ -74,6 +79,17 @@ const Favorite = () => {
         <span>Đã thêm vào giỏ hàng!</span>
       </div>
     );
+
+  const findMainImage = (images) => {
+    let mainImage = "";
+    images.map((img) => {
+      if (img.main === true) {
+        mainImage = img.name;
+      }
+    });
+    return "http://localhost:8080/image/fileSystem/" + mainImage;
+  };
+
   return (
     <section className="section-favorite-container">
       <ToastContainer
@@ -93,20 +109,26 @@ const Favorite = () => {
           <div className="col-12">MY LIST ({fvrDetailList?.length})</div>
           {fvrDetailList &&
             fvrDetailList.map((fv, idx) => (
-              <div className="col-6 fav-item-container" key={idx}>
+              <div
+                className="col-6 fav-item-container"
+                style={{
+                  height: "auto",
+                }}
+                key={idx}
+              >
                 <div
                   className={`fav-stock-status ${
                     fv.watch.inventoryQuantity > 0 ? "in-stock" : "out-stock"
                   }`}
                 >
                   <div className="stock-content">
-                    {fv.watch.inventoryQuantity > 0 ? "In Stock" : "Sold Out"}
+                    {fv.watch.inventoryQuantity > 0 ? "Còn hàng" : "Hết hàng"}
                   </div>
                 </div>
                 <div className="fav-item">
                   <div className="fav-watch-img">
                     <img
-                      src={fv.watch.images[0].image}
+                      src={findMainImage(fv.watch.images)}
                       alt={fv.watch.name}
                       className="fv-img"
                     />
@@ -118,7 +140,7 @@ const Favorite = () => {
                       <p className="fav-inf">{fv.watch.reference}</p>
 
                       <span>
-                        {(fv.watch.defaultPrices * 10000000).toLocaleString()}đ
+                        {(fv.watch.defaultPrices * 1000).toLocaleString()}đ
                       </span>
                       <ReactStars
                         edit={false}

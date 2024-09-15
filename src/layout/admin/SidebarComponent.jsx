@@ -2,19 +2,26 @@ import React, { useState } from "react";
 import { tokens } from "./theme";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
-import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
-import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
-import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
-import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
-import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
-import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
-import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
+// import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
+// import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
+// import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
+// import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
+// import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
+// import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
+// import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
+// import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
+// import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
+import WatchOutlinedIcon from "@mui/icons-material/WatchOutlined";
+import AccountBoxOutlinedIcon from "@mui/icons-material/AccountBoxOutlined";
+import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined";
+import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
+import GppGoodOutlinedIcon from "@mui/icons-material/GppGoodOutlined";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+// import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
+import { AcUnitOutlined } from "@mui/icons-material";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -119,9 +126,55 @@ const SidebarComponent = () => {
 
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
             <Item
-              title="Orders"
+              title="Tổng quan"
+              to="dashboard"
+              icon={<LocalOfferOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+
+            <Item
+              title="Khách hàng"
+              to="users"
+              icon={<AccountBoxOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+
+            <Item
+              title="Đơn hàng"
               to="orders"
-              icon={<HomeOutlinedIcon />}
+              icon={<LocalMallOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+
+            <Item
+              title="Đồng hồ"
+              to="products"
+              icon={<WatchOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+
+            <Item
+              title="Khuyến mãi"
+              to="discounts"
+              icon={<LocalOfferOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Thương hiệu"
+              to="brands"
+              icon={<GppGoodOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Phí vận chuyển"
+              to="shipping-rates"
+              icon={<LocalShippingIcon />}
               selected={selected}
               setSelected={setSelected}
             />

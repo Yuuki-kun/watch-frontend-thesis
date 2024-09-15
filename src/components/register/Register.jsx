@@ -23,6 +23,7 @@ const Register = () => {
     password: "",
     role: "USER",
     phoneNumber: "",
+    gender: "",
   });
 
   const handleChange = (e) => {
@@ -269,7 +270,7 @@ const Register = () => {
   }, [success]);
   console.log(startListener);
   console.log(localStorageValue);
-
+  console.log("user = " + registerUser.gender);
   return (
     <>
       {success ? (
@@ -449,7 +450,7 @@ const Register = () => {
 
               <div className="input-container">
                 <label htmlFor="phoneNumber" className="form-label">
-                  Phone Number:
+                  Số điện thoại:
                 </label>
                 <span className="span-input">
                   <input
@@ -475,8 +476,25 @@ const Register = () => {
               </div>
 
               <div className="input-container">
+                <label htmlFor="gender" className="form-label">
+                  Giới tính:
+                </label>
+                <span className="span-input">
+                  <select
+                    name="gender"
+                    id="gender"
+                    value={registerUser.gender}
+                    onChange={handleChange}
+                  >
+                    <option value="Male">Nam</option>
+                    <option value="Female">Nữ</option>
+                  </select>
+                </span>
+              </div>
+
+              <div className="input-container">
                 <label htmlFor="password" className="form-label">
-                  Password:
+                  Mật khẩu:
                 </label>
                 <span className="span-input">
                   <input
@@ -529,9 +547,8 @@ const Register = () => {
                       : "offscreen"
                   }
                 >
-                  8 to 24 characters. Must include uppercase and lowercase
-                  letters, a number and a special character. Allowed special
-                  characters:
+                  8 đến 24 ký tự. Phải bao gồm chữ hoa và chữ thường chữ cái, số
+                  và ký tự đặc biệt
                   <span aria-label="exclamation mark">!</span>{" "}
                   <span aria-label="at symbol">@</span>{" "}
                   <span aria-label="hashtag">#</span>{" "}
@@ -542,7 +559,7 @@ const Register = () => {
 
               <div className="input-container">
                 <label htmlFor="matchPwd" className="form-label">
-                  Confirm Password:
+                  Nhập lại mật khẩu:
                 </label>
                 <span className="span-input">
                   <input
@@ -608,7 +625,7 @@ const Register = () => {
                         : "offscreen confirmnote"
                     }
                   >
-                    Must match the first password input field.
+                    Phải khớp với trường nhập mật khẩu đầu tiên.{" "}
                   </p>
                   <p
                     id="confirmnote-pwd"
@@ -616,7 +633,7 @@ const Register = () => {
                       matchPwd && !validPassword ? "instructions" : "offscreen"
                     }
                   >
-                    Password above does not valid.
+                    Mật khẩu trên không hợp lệ.{" "}
                   </p>
                 </div>
               </div>

@@ -36,6 +36,10 @@ import {
   removeFromFavoriteService,
 } from "../../api/services/favoriteListService";
 import usePrivateRequest from "../../hooks/usePrivateRequest";
+import ClockLoader from "../../components/ClockLoader";
+import RenderChildReview from "./RenderChildReview";
+import { fetchReviewsByParentId } from "../../api/services/reviewService";
+import ReviewComponent from "./ReviewComponent";
 
 const ProductView = () => {
   const { auth } = useAuth();
@@ -48,6 +52,8 @@ const ProductView = () => {
   const [isToggleDesc, setIsToggleDesc] = useState(false);
   const [isAddingToBag, setIsAddingToBag] = useState(false);
   const [isInWishList, setIsInWishList] = useState(false);
+
+  const [onShowChildComments, setOnShowChildComments] = useState(false);
 
   const [ratingStarsCount, setRatingStarsCount] = useState({
     1: 0,
@@ -87,7 +93,7 @@ const ProductView = () => {
       setRatingStarsCount((prevCount) => {
         const updatedRatingStarsCount = { ...prevCount };
 
-        watchDetails.reviews.forEach(function (review) {
+        watchDetails.reviews?.forEach(function (review) {
           const ratingStars = review.ratingStars;
           if (updatedRatingStarsCount.hasOwnProperty(ratingStars)) {
             updatedRatingStarsCount[ratingStars]++;
@@ -120,34 +126,46 @@ const ProductView = () => {
     setIsToggleDesc(!isToggleDesc);
   };
 
-  const [bestSellerItems, setBestSellerItems] = useState([]);
-  const getBestSellerProducts = async () => {
-    try {
-      const response = await axios.get("/products");
-      if (response?.data) {
-        const tripledArray = [];
-        for (let i = 0; i < response.data.length; i += 2) {
-          for (let j = 0; j < 3; j++) {
-            if (
-              response.data[i] !== undefined &&
-              response.data[i + 1] !== undefined
-            ) {
-              tripledArray.push(response.data[i]);
-              tripledArray.push(response.data[i + 1]);
-            }
-          }
-        }
-        setBestSellerItems(tripledArray);
-      }
-      console.log(response);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  const [ids, setIds] = useState([]);
+  const [recommendedWatches, setRecommendedWatches] = useState([]);
 
   useEffect(() => {
+    const getBestSellerProducts = async () => {
+      try {
+        const response = await axios.get(
+          `http://127.0.0.1:5000/predictions/${auth.userId}`
+        );
+        console.log("res=" + response);
+        const rs = response.data.map((item) => item[0]);
+        setIds(rs);
+        console.log("rs=" + rs);
+      } catch (err) {
+        console.error(err);
+      }
+    };
     getBestSellerProducts();
   }, []);
+
+  useEffect(() => {
+    const getWatchesWithIdList = async (idList) => {
+      try {
+        console.log("start fetch");
+        const response = await axios.post(
+          `http://127.0.0.1:8080/products/product-by-list-id`,
+          idList
+        );
+        setRecommendedWatches(response.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    if (ids) {
+      console.log(ids);
+      getWatchesWithIdList(ids);
+    }
+  }, [ids]);
+
+  console.log(recommendedWatches);
 
   const NextArrow = (props) => {
     const { onClick } = props;
@@ -254,7 +272,7 @@ const ProductView = () => {
     toast.success(
       <div>
         <img
-          src={watchDetails.images[0].image}
+          src={`http://localhost:8080/image/fileSystem/${watchDetails.images[0].name}`}
           alt=""
           className="notify-watch-img"
         />
@@ -386,11 +404,37 @@ const ProductView = () => {
       }
     }
   };
+  const [currentLoadingCommentId, setCurrentLoadingCommentId] = useState(null);
+  const [isLoadingComment, setIsLoadingComment] = useState(false);
+  const [commentList, setCommentList] = useState([]);
+  const [activeComment, setActiveComment] = useState([]);
+  const [isAddingComment, setIsAddingComment] = useState(false);
+  const showComment = async (id) => {
+    console.log(id);
+    if (activeComment.includes(id)) {
+      const newActiveComment = activeComment.filter((item) => item !== id);
+      setActiveComment(newActiveComment);
+      return;
+    }
+    try {
+      setIsLoadingComment(true);
+      setCurrentLoadingCommentId(id);
+
+      const res = await fetchReviewsByParentId(id);
+      console.log(res);
+      setIsLoadingComment(false);
+      setCommentList(res);
+      activeComment.push(id);
+    } catch (err) {
+      console.error(err);
+    }
+    console.log(id);
+  };
 
   return (
     <>
       {loading ? (
-        <div>Loading items...</div>
+        <ClockLoader />
       ) : (
         <section>
           <div className="product-view-container container">
@@ -405,13 +449,17 @@ const ProductView = () => {
                     key={i}
                     onMouseEnter={() => hoverImagePV(i)}
                   >
-                    <img src={img.image} alt="" className="img-fluid" />
+                    <img
+                      src={`http://localhost:8080/image/fileSystem/${img.name}`}
+                      alt=""
+                      className="img-fluid"
+                    />
                   </div>
                 ))}
               </div>
               <div className="col-5 pv-main-img sticky-col">
                 <ImageMagnifier
-                  imgUrl={watchDetails?.images[currentImg].image}
+                  imgUrl={`http://localhost:8080/image/fileSystem/${watchDetails?.images[currentImg].name}`}
                 />
                 {/* {check if the watch is in wish list?} */}
                 <button
@@ -442,54 +490,71 @@ const ProductView = () => {
                       }`}
                     >
                       {watchDetails.inventoryQuantity > 0
-                        ? "IN STOCK"
-                        : "OUT OF STOCK"}
+                        ? "CÒN HÀNG"
+                        : "HẾT HÀNG"}
                     </div>
                     {/* if discount */}
-                    <div className=" pv-prod-status pv-prod-discount">
-                      30% OFF
-                    </div>
+                    {watchDetails.discount > 0 && (
+                      <div className=" pv-prod-status pv-prod-discount">
+                        {watchDetails.discount}% OFF
+                      </div>
+                    )}
                   </div>
                   <div className="pv-reviews">
                     <ReactStars
                       count={5}
-                      value={4}
+                      value={watchDetails.stars}
                       color1={"#aaa"}
                       color2={"#000"}
                       size={24}
                       edit={false}
                     />
                     <p>({watchDetails.stars})</p>
-                    <p style={{ fontWeight: "700" }}>(13 reviews)</p>
+                    <p style={{ fontWeight: "700" }}>
+                      ({watchDetails.totalReviews})
+                    </p>
                   </div>
                 </div>
 
                 {/* {if have discount} */}
                 <div className="pv-prices">
                   <span>
-                    <span className="pv-default-prices">
-                      {(
-                        Number(watchDetails.defaultPrices) *
-                        24520 *
-                        1000
-                      ).toLocaleString()}
-                      &#8363;
-                    </span>
+                    {watchDetails.discount > 0 && (
+                      <span className="pv-default-prices">
+                        {(watchDetails.defaultPrices * 1000).toLocaleString()}
+                        &#8363;
+                      </span>
+                    )}
                     <span className="pv-discount-prices">
-                      {(
-                        Number(watchDetails.defaultPrices) *
-                        24520 *
-                        1000 *
-                        (1 - 30 / 100)
+                      {Number(
+                        watchDetails.defaultPrices *
+                          1000 *
+                          (1 - watchDetails.discount / 100)
                       ).toLocaleString()}
                       &#8363;
                     </span>
+                    {watchDetails.discount > 0 && (
+                      <span
+                        style={{
+                          color: "red",
+                          fontSize: "1.2rem",
+                          fontWeight: "700",
+                        }}
+                      >
+                        Cho đến{" "}
+                        {new Date(watchDetails.endDiscountDate).toLocaleString(
+                          "vi-VN"
+                        )}
+                      </span>
+                    )}
                   </span>
                   <div className="pv-price-discount-desc">
-                    <p style={{ fontSize: "1rem" }}>
-                      Enjoy 30% off of this item, price as shown. Hurry before
-                      it's out of stock.
-                    </p>
+                    {watchDetails.discount > 0 && (
+                      <p style={{ fontSize: "1rem" }}>
+                        Giảm giá {watchDetails.discount}% cho mặt hàng này như
+                        được hiển thị. Hãy nhanh tay trước khi hết hàng.
+                      </p>
+                    )}
                     <span style={{ fontSize: "1.2rem", color: "green" }}>
                       Free shipping
                     </span>
@@ -760,11 +825,11 @@ const ProductView = () => {
             </div>
             <div className="pv-recommended-list-container">
               <div>
-                <h2>You may also like</h2>
+                <h2>Bạn có thể thích</h2>
               </div>
               <Slider {...settings}>
-                {bestSellerItems != null &&
-                  bestSellerItems.map((watch, idx) => {
+                {recommendedWatches != null &&
+                  recommendedWatches.map((watch, idx) => {
                     return <BestSellerItems key={idx} watchItem={watch} />;
                   })}
               </Slider>
@@ -787,7 +852,7 @@ const ProductView = () => {
                           style={{
                             width: `${
                               (ratingStarsCount[id] /
-                                watchDetails.reviews.length) *
+                                watchDetails?.reviews?.length) *
                               100
                             }%`,
                           }}
@@ -814,70 +879,111 @@ const ProductView = () => {
                 <p>({watchDetails?.reviews?.length} reviews)</p>
               </div>
               <div className="reviews-details-container">
-                {watchDetails?.reviews.map((rv, idx) => (
-                  <div className="review-details row" key={idx}>
-                    <div className="reviewer-info-container col-2">
-                      {/* <img src="" alt="" /> */}
-                      <div className="rv-customer-avt">
-                        <FaUser />
-                      </div>
-                      <span className="rv-customer-name">
-                        {rv?.customerDto?.firstName} {rv?.customerDto?.lastName}
-                      </span>
-                    </div>
-                    <div className="review-contents col-10">
-                      <ReactStars
-                        value={rv.ratingStars}
-                        size={22}
-                        color1={"#aaa"}
-                        color2={"#000"}
-                        edit={false}
-                      />
-                      <p style={{ marginBottom: "0" }}>
-                        {new Date(rv.datePosted).toLocaleString()}
-                      </p>
-                      <div className="rv-content">
-                        <p style={{ marginBottom: "0", textAlign: "justify" }}>
-                          {rv.comment}
-                        </p>
-                      </div>
-                      <button
-                        className="rv-heart-btn"
-                        onClick={() => handleHeart(idx)}
-                      >
-                        {heartStates[idx] ? (
-                          <FaHeart className="rv-icons heart-active" />
-                        ) : (
-                          <FaRegHeart className="rv-icons" />
-                        )}
+                {watchDetails?.reviews?.map((rv, idx) => (
+                  <ReviewComponent
+                    rv={rv}
+                    key={idx}
+                    axiosPrivate={axiosPrivate}
+                    rootId={rv.id}
+                    rootFetch={showComment}
+                  />
+                  // <div className="review-details row mb-1" key={idx}>
+                  //   <div className="reviewer-info-container col-2">
+                  //     {/* <img src="" alt="" /> */}
+                  //     <div className="rv-customer-avt">
+                  //       <FaUser />
+                  //     </div>
+                  //     <span className="rv-customer-name">
+                  //       {rv?.customerDto?.firstName} {rv?.customerDto?.lastName}
+                  //     </span>
+                  //   </div>
+                  //   <div className="review-contents col-10">
+                  //     <ReactStars
+                  //       value={rv.ratingStars}
+                  //       size={22}
+                  //       color1={"#aaa"}
+                  //       color2={"#000"}
+                  //       edit={false}
+                  //     />
+                  //     <p style={{ marginBottom: "0" }}>
+                  //       {new Date(rv.datePosted).toLocaleString()}
+                  //     </p>
+                  //     <div className="rv-content">
+                  //       <p style={{ marginBottom: "0", textAlign: "justify" }}>
+                  //         {rv.comment}
+                  //       </p>
+                  //     </div>
+                  //     <div className="pv-btn-container d-flex align-items-end gap-2">
+                  //       {/* <button
+                  //         className="rv-heart-btn"
+                  //         onClick={() => handleHeart(idx)}
+                  //       >
+                  //         {heartStates[idx] ? (
+                  //           <FaHeart className="rv-icons heart-active" />
+                  //         ) : (
+                  //           <FaRegHeart className="rv-icons" />
+                  //         )}
 
-                        {rv.loves}
-                      </button>
-                      {/* <FaHeart className="rv-icons" /> */}
-                      <FaRegComment className="rv-icons icon-comment" />{" "}
-                      {rv.childReviews?.length}
-                      {rv.childReviews?.map((crv, idx) => (
-                        <div className="rv-replies" key={idx}>
-                          <div className="replies-info-container">
-                            {/* <img src="" alt="" /> */}
-                            <div className="replies-customer-avt">
-                              <FaUser />
-                            </div>
-                            <span className="replies-customer-name">
-                              {crv?.customerDto?.firstName}{" "}
-                              {crv?.customerDto?.lastName} |
-                            </span>
-                            <span className="replies-customer-name">
-                              {new Date(crv.datePosted).toLocaleString()}
-                            </span>
-                          </div>
-                          <div className="replies-content">
-                            <p style={{ marginBottom: "0" }}>{crv.comment}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+                  //         {rv.loves}
+                  //       </button> */}
+                  //       {/* <FaHeart className="rv-icons" /> */}
+                  //       <button
+                  //         className="rv-heart-btn"
+                  //         // onClick={() => showComment(rv?.id)}
+                  //       >
+                  //         {" "}
+                  //         <FaRegComment className="rv-icons icon-comment" />
+                  //         {rv?.totalChildReviews}
+                  //       </button>
+                  //       {rv?.totalChildReviews > 0 && (
+                  //         <button
+                  //           className="rv-heart-btn text-primary link-primary"
+                  //           onClick={() => showComment(rv?.id)}
+                  //           style={{ fontStyle: "italic" }}
+                  //         >
+                  //           Hiển thị bình luận
+                  //         </button>
+                  //       )}
+                  //     </div>
+                  //     {isAddingComment}
+                  //     {isLoadingComment &&
+                  //     rv?.id === currentLoadingCommentId ? (
+                  //       <ClockLoader />
+                  //     ) : (
+                  //       <></>
+                  //     )}
+                  //     {commentList.length > 0 &&
+                  //       commentList.map((crv, idx) => (
+                  //         // <div className="rv-replies" key={idx}>
+                  //         //   <div className="replies-info-container">
+                  //         //     {/* <img src="" alt="" /> */}
+                  //         //     <div className="replies-customer-avt">
+                  //         //       <FaUser />
+                  //         //     </div>
+                  //         //     <span className="replies-customer-name">
+                  //         //       {crv?.customerDto?.firstName}{" "}
+                  //         //       {crv?.customerDto?.lastName} |
+                  //         //     </span>
+                  //         //     <span className="replies-customer-name">
+                  //         //       {new Date(crv.datePosted).toLocaleString()}
+                  //         //     </span>
+                  //         //   </div>
+                  //         //   <div className="replies-content">
+                  //         //     <p style={{ marginBottom: "0" }}>{crv.comment}</p>
+                  //         //   </div>
+                  //         // </div>
+                  //         <div
+                  //           className={`child-comments-list ${
+                  //             activeComment.includes(rv?.id)
+                  //               ? "show-child-comments"
+                  //               : "hide-child-comments"
+                  //           }`}
+                  //         >
+                  //           <RenderChildReview key={idx} {...crv} />
+                  //         </div>
+                  //       ))}
+                  //   </div>
+                  // </div>
                 ))}
               </div>
             </div>

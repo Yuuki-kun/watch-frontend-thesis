@@ -316,7 +316,7 @@
 .details-row {
     display: flex;
     flex-wrap: nowrap;
-    font-size: .85rem;
+    font-size: 1rem;
     padding: 7px 0;
 }
 
@@ -437,8 +437,10 @@
     flex-wrap: wrap;
     align-items: flex-start;
     justify-content: space-between;
-    margin-bottom: 2rem;
+    margin-bottom: 2rem !important;
     border-bottom: 1px solid #e4d4d4;
+    position: relative;
+    padding-bottom: 1rem !important;
 }
 
 .reviewer-info-container {
@@ -487,7 +489,8 @@
 }
 
 .icon-comment {
-    margin-left: 2rem;
+    margin-left: .5rem;
+
 }
 
 .rv-replies {
@@ -496,7 +499,7 @@
     flex-direction: column;
     align-items: flex-start;
     margin-bottom: 1rem;
-    background-color: #e4f0ff;
+    background-color: #f4f4f4;
     padding: 10px 15px;
     border-radius: 20px;
 }
@@ -573,3 +576,56 @@
 .Toastify__toast-theme--dark {
     background-color: #060f3c;
 }
+
+.reply-child {
+    background-color: #f4f4f4;
+    width: 95%;
+    align-self: flex-end;
+    border-left: 1px solid #b0b0b0;
+    border-bottom: 1px solid #b0b0b0;
+    position: relative;
+    box-shadow: -2px 2px 4px 1px rgba(0, 0, 0, 0.1);
+}
+
+.reply-child.is-leaf {
+    border-bottom: 1.5px solid transparent;
+    border-left: 1.5px solid transparent;
+}
+
+
+.child-comments-list {
+    width: 100%;
+    overflow: hidden;
+    transform: scaleY(0);
+    height: 0;
+    transition: all 0.3s ease;
+}
+
+.child-comments-list.show-child-comments {
+    transform: scaleY(1);
+    height: auto;
+    transition: all 0.5s ease;
+
+}
+
+.child-comments-list.hide-child-comments {
+    transform: scaleY(0);
+    height: 0;
+    transition: all 0.5s ease;
+}
+
+.leave-comment-container {
+    width: 95%;
+    margin-bottom: 1rem;
+    margin-top: -0.5rem;
+    height: 0;
+    transition: all 0.5s ease;
+}
+
+.show-add-comment {
+    height: auto;
+}
+
+/* .hide-add-comment {
+    height: 0;
+} */

@@ -11,6 +11,7 @@ body {
     min-height: 100%;
     background-color: #fff;
     font-family: 'Source Sans 3', sans-serif;
+    font-size: 16px;
 }
 
 html,
@@ -65,6 +66,7 @@ body,
     border-radius: 7px;
     width: 500px;
     height: 200px;
+    overflow-y: auto;
 }
 
 .modal-btn {
@@ -108,4 +110,31 @@ section {
     background-color: rgb(214, 213, 208);
     height: 1.5px;
     width: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.arrow-prev-control,
+.arrow-next-control {
+    z-index: 1 !important;
+}
+
+.css-lzvvxm-MuiTableContainer-root {
+    max-height: 70vh !important;
+}
+
+.css-17i83a4-MuiTableCell-root {
+    z-index: 0 !important;
+}
+
+th {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+}
+
+td {
+    font-size: 16px !important;
 }

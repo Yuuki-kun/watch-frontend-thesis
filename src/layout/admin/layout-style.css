@@ -1,5 +1,6 @@
 .admin-app {
     font-size: 16px;
+    height: auto;
 }
 
 /* TopBar */
@@ -60,5 +61,21 @@
 /* TopBar */
 
 /* SideBar */
+
+.ps-sidebar-root {
+    height: 100%;
+}
+
+.ps-sidebar-container {
+    height: 100%;
+}
+
+.MuiBox-root.css-3kehzd {
+    position: sticky;
+    top: 0;
+    left: 0;
+    /* z-index: 10001; */
+    height: 100%;
+}
 
 /* SideBar */

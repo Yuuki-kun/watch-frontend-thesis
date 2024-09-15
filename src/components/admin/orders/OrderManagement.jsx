@@ -3,7 +3,8 @@ import Header from "../Header";
 import "./orders.styles.css";
 import { Box, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../../layout/admin/theme";
-import OrderOption from "./OrdersOption";
+
+import OrdersOption from "./OrdersOption";
 const OrderManagement = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -61,16 +62,16 @@ const OrderManagement = () => {
                 : {}
             }
           >
-            <Typography variant="h5" color={colors.grey[100]}>
+            {/* <Typography variant="h5" color={colors.grey[100]}>
               All Transactions
-            </Typography>
+            </Typography> */}
           </button>
           <div className="line-container" style={{ marginTop: 5 }}>
             <span className="line"></span>
           </div>
         </div>
 
-        {orderOptions === "orders" ? <OrderOption /> : <></>}
+        {orderOptions === "orders" ? <OrdersOption /> : <></>}
       </div>
     </div>
   );

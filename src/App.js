@@ -9,6 +9,7 @@ import {
   adminPrivateRoutes,
   publicRoutes,
   publicRoutesNoLayout,
+  userInfoRoutes,
   userPrivateRoutes,
 } from "./config/routes";
 import RequireAuth from "./components/RequireAuth";
@@ -16,10 +17,12 @@ import Persist from "./components/Persist";
 
 import React, { Suspense } from "react";
 import Missing from "./pages/Missing";
+import User from "./pages/users/User";
+import ClockLoader from "./components/ClockLoader";
 
 function App() {
   return (
-    <Suspense fallback={<div>Loading....</div>}>
+    <Suspense fallback={<ClockLoader />}>
       <Routes>
         {/* regis, login */}
         {/* <Route path="login" element={<Login />} />
@@ -30,8 +33,13 @@ function App() {
         <Route element={<Persist />}>
           <Route path="/" element={<UserLayout />}>
             {CreateRoutesFromList(publicRoutes)}
-            <Route element={<RequireAuth allowedRoles={[1234, 9012]} />}>
+            <Route element={<RequireAuth allowedRoles={[1234]} />}>
               {CreateRoutesFromList(userPrivateRoutes)}
+            </Route>
+            <Route path="/user-info/*" element={<User />}>
+              <Route element={<RequireAuth allowedRoles={[1234]} />}>
+                {CreateRoutesFromList(userInfoRoutes)}
+              </Route>
             </Route>
           </Route>
         </Route>

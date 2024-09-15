@@ -97,14 +97,16 @@ const Cart = () => {
 
   useEffect(() => {
     //cartId use as order details id
-    const items = cart.map((cit) => {
-      return {
-        cartId: cit.id,
-        quantity: cit.quantity,
-        price: cit.price,
-        watchId: cit.watch.id,
-      };
-    });
+    const items =
+      cart &&
+      cart.map((cit) => {
+        return {
+          cartId: cit.id,
+          quantity: cit.quantity,
+          price: cit.price,
+          watchId: cit.watch.id,
+        };
+      });
 
     localStorage.setItem("cart-items", JSON.stringify(items));
   }, [cart]);
@@ -133,6 +135,7 @@ const Cart = () => {
     }
   };
 
+  const [totalCheckListPrice, setTotalCheckListPrice] = useState(0);
   useEffect(() => {
     if (checkoutList?.length === cart?.length) {
       setSelectAllItems(true);
@@ -140,7 +143,9 @@ const Cart = () => {
       setSelectAllItems(false);
     }
     const items = checkoutList.map((cit) => {
+      //total price = price * quantity
       //the cartId is order Details ID
+
       return {
         cartId: cit.id,
         quantity: cit.quantity,
@@ -150,13 +155,19 @@ const Cart = () => {
     });
     localStorage.setItem("checkout-list", JSON.stringify(items));
   }, [checkoutList, cart]);
-
+  useEffect(() => {
+    const totalCheckListPrice = checkoutList.reduce(
+      (total, item) => total + item.price * item.quantity,
+      0
+    );
+    setTotalCheckListPrice(totalCheckListPrice);
+  }, [checkoutList]);
   console.log("ckl=" + checkoutList);
   console.log("cart=" + cart);
   const location = useLocation();
   const navigate = useNavigate();
   const handleCheckout = () => {
-    if (auth.userId) {
+    if (auth.userId !== null) {
       console.log("auth");
       navigate("/checkout", {
         state: { method: "checkout" },
@@ -171,6 +182,16 @@ const Cart = () => {
         },
       });
     }
+  };
+
+  const findMainImage = (images) => {
+    let mainImage = "";
+    images.map((img) => {
+      if (img.main === true) {
+        mainImage = img.name;
+      }
+    });
+    return "http://localhost:8080/image/fileSystem/" + mainImage;
   };
 
   return (
@@ -213,7 +234,9 @@ const Cart = () => {
               </div>
             </div>
             <div style={{ marginLeft: "auto" }}>
-              <span style={{ color: "#fff", fontWeight: "bold" }}>Tổng: đ</span>
+              <span style={{ color: "#fff", fontWeight: "bold" }}>
+                Tổng: {(totalCheckListPrice * 1000).toLocaleString()} VND
+              </span>
               <button
                 className="checkout-btn"
                 onClick={handleCheckout}
@@ -253,6 +276,9 @@ const Cart = () => {
                         type="checkbox"
                         name=""
                         id={`list-items-${idx}`}
+                        style={{
+                          opacity: 1,
+                        }}
                         onChange={() => handleSelectChange(item.id, idx)}
                         checked={checkoutList.some(
                           (checkoutItem) => checkoutItem.id === item.id
@@ -261,7 +287,7 @@ const Cart = () => {
                     </td>
                     <td>
                       <img
-                        src={item.watch.images[0].image}
+                        src={findMainImage(item.watch.images)}
                         alt="img"
                         className="cart-item-img"
                       />
@@ -271,7 +297,7 @@ const Cart = () => {
                       <p className="item-name">{item.watch.name}</p>
                     </td>
                     <td>
-                      <p>{item.price * 1000000}đ</p>
+                      <p>{(item.price * 1000).toLocaleString()}đ</p>
                     </td>
 
                     <td className="align-middle">

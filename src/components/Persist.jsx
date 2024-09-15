@@ -20,7 +20,9 @@ const Persist = () => {
       }
     };
 
-    !auth?.accessToken && persist ? verifyRefreshToken() : setIsLoading(false);
+    !auth?.accessToken && persist && !window.location.href.includes("admin")
+      ? verifyRefreshToken()
+      : setIsLoading(false);
 
     return () => (isMounted = false);
   }, []);

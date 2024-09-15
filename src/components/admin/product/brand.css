@@ -1,0 +1,4 @@
+.list-brand .brand:hover {
+    cursor: pointer;
+    background-color: #717171 !important;
+}

@@ -37,9 +37,11 @@ export const updateDefaultAddress = async (cusId, addressId, axiosPrivate) => {
   }
 };
 
-export const fetchOrders = async (userId, axiosPrivate) => {
+export const fetchOrders = async (userId, axiosPrivate, status) => {
   try {
-    const response = await axiosPrivate.get(`${GET_ORDERS}/${userId}`);
+    const response = await axiosPrivate.get(
+      `${GET_ORDERS}/${userId}/${status}`
+    );
     return response.data;
   } catch (err) {
     console.log(err);

@@ -2,37 +2,28 @@ import React, { useEffect, useState } from "react";
 import { FcNext, FcPrevious } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
-
+import "../../pages/home/home.css";
 const BestSellerItems = ({ watchItem }) => {
-  // console.log(watchItem);
-  //   props.map((p, i) => {
-  //     console.log(i + " " + p.name);
-  //   });
-  const targetTime = new Date();
-  // targetTime.setHours(watchItem.timeLeaf / 100);
-  // targetTime.setMinutes(watchItem.timeLeaf % 100);
-  targetTime.setHours(3000 / 100);
-  targetTime.setMinutes(3000 % 100);
-  targetTime.setSeconds(0);
+  // const [imageMain, setImageMain] = useState(null);
+  // useEffect(() => {
+  //   if (watchItem?.images?.length > 0) {
+  //     watchItem.images.map((img) => {
+  //       if (img.main === true) {
+  //         setImageMain(img.name);
+  //       }
+  //     });
+  //   }
+  // }, []);
 
-  const calculateTimeRemaining = () => {
-    const currentTime = new Date();
-    const difference = targetTime - currentTime;
-    if (difference <= 0) {
-      return { hours: 0, minutes: 0, seconds: 0 };
-    }
-    const hours = Math.floor(difference / 3600000);
-    const minutes = Math.floor((difference % 3600000) / 60000);
-    const seconds = Math.floor((difference % 60000) / 1000);
-    return { hours, minutes, seconds };
+  const findMainImage = (images) => {
+    let mainImage = "";
+    images.map((img) => {
+      if (img.main === true) {
+        mainImage = img.name;
+      }
+    });
+    return "http://localhost:8080/image/fileSystem/" + mainImage;
   };
-  const [timeRemaining, setTimeRemaining] = useState(calculateTimeRemaining());
-  useEffect(() => {
-    const timerInterval = setInterval(() => {
-      setTimeRemaining(calculateTimeRemaining());
-    }, 1000);
-    return () => clearInterval(timerInterval);
-  }, []);
 
   return (
     <Link
@@ -43,7 +34,7 @@ const BestSellerItems = ({ watchItem }) => {
       <div className="product">
         <div className="img">
           <img
-            src={watchItem != null ? watchItem.images[0].image : "img"}
+            src={findMainImage(watchItem.images)}
             alt="img"
             className="img-fluid"
           />
@@ -55,25 +46,28 @@ const BestSellerItems = ({ watchItem }) => {
           <div className="price">
             <div className="default-price">
               {watchItem != null &&
-                (Number(watchItem.defaultPrices) * 1000000).toLocaleString()}
-              đ
+                watchItem.discount > 0 &&
+                (Number(watchItem.defaultPrices) * 1000).toLocaleString() +
+                  "VND"}
             </div>
             <div className="new-discount-price">
               {watchItem != null &&
                 (
-                  (Number(watchItem.defaultPrices) * 1000 * Number(100 - 20)) /
+                  (Number(watchItem.defaultPrices) *
+                    1000 *
+                    Number(100 - watchItem.discount)) /
                   100
                 )
                   // Number(100 - watchItem.discountPercent)) /100
 
                   .toLocaleString()}
-              đ
-              <div>
+              VND
+              {/* <div>
                 <span style={{ color: "black", marginLeft: "8px" }}>in</span>
-              </div>
-              <div className="discount-unit-time">{timeRemaining.hours}</div>:
-              <div className="discount-unit-time">{timeRemaining.minutes}</div>:
-              <div className="discount-unit-time">{timeRemaining.seconds}</div>
+              </div> */}
+              {/* <div className="discount-unit-time">{timeRemaining.hours}</div>: */}
+              {/* <div className="discount-unit-time">{timeRemaining.minutes}</div>: */}
+              {/* <div className="discount-unit-time">{timeRemaining.seconds}</div> */}
             </div>
           </div>
         </div>

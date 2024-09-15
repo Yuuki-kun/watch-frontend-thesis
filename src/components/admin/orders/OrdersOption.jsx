@@ -24,7 +24,7 @@ const OrdersOption = () => {
           },
         }}
       >
-        <Box
+        {/* <Box
           className="orders-option-filter"
           backgroundColor={colors.primary[400]}
           style={
@@ -43,6 +43,20 @@ const OrdersOption = () => {
           <Typography variant="h4" color={colors.grey[100]} fontWeight={"500"}>
             Today orders
           </Typography>
+        </Box> */}
+        <Box
+          className="orders-option-filter"
+          backgroundColor={colors.primary[400]}
+          style={
+            filterOptions === "Tất cả"
+              ? {
+                  border: `1.5px solid ${colors.grey[600]}`,
+                }
+              : {}
+          }
+          onClick={selectOrderOptions("orders")}
+        >
+          Tất cả
         </Box>
         <Box
           className="orders-option-filter"
@@ -76,35 +90,88 @@ const OrdersOption = () => {
           className="orders-option-filter"
           backgroundColor={colors.primary[400]}
           style={
-            filterOptions === "waiting"
+            filterOptions === "Preparing"
               ? {
                   border: `1.5px solid ${colors.grey[600]}`,
                 }
               : {}
           }
-          onClick={selectOrderOptions("waiting")}
+          onClick={selectOrderOptions("Preparing")}
         >
-          Waiting
+          Preparing
         </Box>
         <Box
           className="orders-option-filter"
           backgroundColor={colors.primary[400]}
           style={
-            filterOptions === "refunded"
+            filterOptions === "Shipping"
               ? {
                   border: `1.5px solid ${colors.grey[600]}`,
                 }
               : {}
           }
-          onClick={selectOrderOptions("refunded")}
+          onClick={selectOrderOptions("Shipping")}
+        >
+          Shipping
+        </Box>
+
+        <Box
+          className="orders-option-filter"
+          backgroundColor={colors.primary[400]}
+          style={
+            filterOptions === "Refunded"
+              ? {
+                  border: `1.5px solid ${colors.grey[600]}`,
+                }
+              : {}
+          }
+          onClick={selectOrderOptions("Refunded")}
         >
           Refunded
+        </Box>
+
+        <Box
+          className="orders-option-filter"
+          backgroundColor={colors.primary[400]}
+          style={
+            filterOptions === "Cancelled"
+              ? {
+                  border: `1.5px solid ${colors.grey[600]}`,
+                }
+              : {}
+          }
+          onClick={selectOrderOptions("Cancelled")}
+        >
+          Cancelled
         </Box>
       </Box>
       <div className="line-container" style={{ marginTop: "0px" }}>
         <span className="line"></span>
       </div>
-      {filterOptions === "orders" ? <FilterOrders /> : <></>}
+      {filterOptions === "orders" ? <FilterOrders type={"orders"} /> : <></>}
+      {filterOptions === "completed" ? (
+        <FilterOrders type="completed" />
+      ) : (
+        <></>
+      )}
+      {filterOptions === "uncaptured" ? (
+        <FilterOrders type="uncaptured" />
+      ) : (
+        <></>
+      )}
+      {filterOptions === "Preparing" ? (
+        <FilterOrders type="preparing" />
+      ) : (
+        <></>
+      )}
+
+      {filterOptions === "Shipping" ? <FilterOrders type="shipping" /> : <></>}
+      {filterOptions === "Refunded" ? <FilterOrders type="refunded" /> : <></>}
+      {filterOptions === "Cancelled" ? (
+        <FilterOrders type="cancelled" />
+      ) : (
+        <></>
+      )}
     </>
   );
 };

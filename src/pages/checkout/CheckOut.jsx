@@ -16,6 +16,8 @@ const CheckOut = () => {
   );
   const [address, setAddress] = useState([]);
   const [showOtherTypeField, setShowOtherTypeField] = useState(false);
+  const [shippingRates, setShippingRates] = useState([]);
+
   useEffect(() => {
     const fetchAddresses = async () => {
       if (auth.userId) {
@@ -27,7 +29,18 @@ const CheckOut = () => {
         }
       }
     };
+
+    const getShippingFree = async () => {
+      try {
+        const res = await axios.get("/api/v1/location/shipping-rates");
+        console.log(res.data);
+        setShippingRates(res.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
     fetchAddresses();
+    getShippingFree();
   }, [auth.userId]);
 
   console.log(items);
@@ -77,20 +90,31 @@ const CheckOut = () => {
   // if checkout success => redirect to success page
   // else => redirect to error page
   const [isHandling, setIsHandling] = useState(false);
-  const checkOutStripeHandle = async () => {
-    setIsHandling(true);
-    console.log(items);
-    try {
-      const response = await createCheckoutSession(
-        auth?.userId,
-        items,
-        axiosPrivate
-      );
-      setIsHandling(false);
-      window.location.href = response;
-      console.log(response);
-    } catch (err) {
-      console.log(err);
+  const [isPaypalHandling, setIsPaypalHandling] = useState(false);
+  const checkoutHandle = async (pmethod) => {
+    if (address.length > 0) {
+      pmethod === "paypal" && setIsPaypalHandling(true);
+      pmethod === "stripe" && setIsHandling(true);
+      console.log(items);
+      try {
+        const response = await createCheckoutSession(
+          auth?.userId,
+          items,
+          axiosPrivate,
+          pmethod
+        );
+        pmethod === "paypal" && setIsPaypalHandling(false);
+        pmethod === "stripe" && setIsHandling(false);
+
+        pmethod === "stripe"
+          ? (window.location.href = response)
+          : (window.location.href = "/user-info/user-orders");
+        console.log(response);
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      alert("Vui lòng chọn địa chỉ giao hàng");
     }
   };
 
@@ -175,7 +199,7 @@ const CheckOut = () => {
 
     const newAddress = {
       name,
-      addressInput,
+      address: addressInput,
       city: selectedProvince,
       district: selectedDistrict,
       ward: selectedWard,
@@ -196,7 +220,34 @@ const CheckOut = () => {
       console.error(err);
     }
   };
-
+  const findMainImage = (images) => {
+    let mainImage = "";
+    images.map((img) => {
+      if (img.main === true) {
+        mainImage = img.name;
+      }
+    });
+    return "http://localhost:8080/image/fileSystem/" + mainImage;
+  };
+  const calculateShipping = () => {
+    let shippingFee = 0;
+    console.log(shippingRates);
+    console.log(totalPrice);
+    if (shippingRates?.length > 0) {
+      for (let i = 0; i < shippingRates?.length; i++) {
+        for (let j = 0; j < address.length; j++) {
+          if (address[i].city === shippingRates[i].province) {
+            if (totalPrice < shippingRates[i].freeShippingThreshold / 1000) {
+              shippingFee = shippingRates[i].rate;
+            } else {
+              shippingFee = 0;
+            }
+          }
+        }
+      }
+    }
+    return shippingFee;
+  };
   return (
     <section className="address-section">
       <ChangeAddressModal
@@ -305,6 +356,8 @@ const CheckOut = () => {
                               placeholder="Tên"
                               onChange={handleProvinceChange}
                             >
+                              <option value={""}></option>
+
                               {provinces &&
                                 provinces.map((province) => (
                                   <option value={province.name}>
@@ -330,6 +383,8 @@ const CheckOut = () => {
                               id="inputDistrict"
                               onChange={handleDistrictChange}
                             >
+                              {" "}
+                              <option value={""}></option>
                               {districts &&
                                 districts.map((district) => (
                                   <option value={district.name}>
@@ -342,7 +397,7 @@ const CheckOut = () => {
 
                         <div class="mb-3 row">
                           <label for="inputWard" class="col-2 col-form-label">
-                            Quận/Huyện
+                            Xã/Phường
                           </label>
                           <div class="col-6">
                             <select
@@ -352,6 +407,8 @@ const CheckOut = () => {
                               id="inputWard"
                               onChange={handleWardChange}
                             >
+                              {" "}
+                              <option value={""}></option>
                               {wards &&
                                 wards.map((ward) => (
                                   <option value={ward.name}>{ward.name}</option>
@@ -419,7 +476,10 @@ const CheckOut = () => {
               <div className="checkout-methods-btn">
                 <h6>Chọn Hình Thức Thanh Toán </h6>
                 <div className="checkout-btn-container">
-                  <button className="ck-btn cash-btn">
+                  <button
+                    className="ck-btn cash-btn"
+                    onClick={() => checkoutHandle("cash")}
+                  >
                     Thanh Toán Bằng Tiền Mặt
                   </button>
                   <div className="line-container">
@@ -441,7 +501,7 @@ const CheckOut = () => {
                     className={`ck-btn stripe-btn ${
                       isHandling && "in-checkout-progress"
                     }`}
-                    onClick={checkOutStripeHandle}
+                    onClick={() => checkoutHandle("stripe")}
                   >
                     {isHandling ? "Waiting..." : "Thanh Toán Với Stripe"}
                   </button>
@@ -456,12 +516,14 @@ const CheckOut = () => {
                 <div className="order-items" key={item.id}>
                   <div className="or-info">
                     <img
-                      src={item.watch.images[0].image}
+                      src={findMainImage(item.watch.images)}
                       alt=""
                       className="or-img"
                     />
                     <span className="or-qty">&#215;{item.quantity}</span>
-                    <span className="or-price">{item.price}&#8363;</span>
+                    <span className="or-price">
+                      {(item.price * 1000).toLocaleString()}&#8363;
+                    </span>
                   </div>
                   <div className="or-name">
                     <p>{item.watch.name}</p>
@@ -474,18 +536,22 @@ const CheckOut = () => {
               <div className="total-price-info">
                 <div className="tempo-price">
                   <p>Tạm tính: </p>
-                  <p>{totalPrice}&#8363;</p>
+                  <p>{(totalPrice * 1000).toLocaleString()}&#8363;</p>
                 </div>
                 <div className="tempo-price">
                   <p>Phí vận chuyển: </p>
-                  <p>{totalPrice}&#8363;</p>
+                  {calculateShipping().toLocaleString()}
+                  {0}&#8363;
                 </div>
                 <div className="line-container">
                   <span className="line"></span>
                 </div>
                 <div className="tempo-price">
                   <p>Tổng Cộng: </p>
-                  <p>{totalPrice}&#8363;</p>
+                  <p>
+                    {(totalPrice * 1000 + calculateShipping()).toLocaleString()}
+                    &#8363;
+                  </p>
                 </div>
               </div>
             </div>

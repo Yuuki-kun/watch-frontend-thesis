@@ -35,8 +35,10 @@ const useRefreshToken = () => {
       }
       return response.data.access_token;
     } catch (error) {
-      console.error("error from use refresh: " + error);
+      // console.error("error from use refresh: " + error);
+
       if (error?.response?.status === 403) {
+        alert("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.");
         navigate("/login", { state: { from: location }, replace: true });
       }
     }

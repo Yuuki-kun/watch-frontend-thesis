@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import "./style.user.css";
 import { GoArrowRight } from "react-icons/go";
+import { useNavigate } from "react-router-dom";
 
 const MenuOption = (props) => {
   console.log(props);
-
+  const navigate = useNavigate();
   return (
     <div className="left-menu-option">
       {props.caption !== undefined && (
@@ -19,7 +20,10 @@ const MenuOption = (props) => {
           className={`option-button ${
             props.selected === props.optionKey ? "selected" : ""
           }`}
-          onClick={() => props.setSelected(props.optionKey)}
+          onClick={() => {
+            props.setSelected(props.optionKey);
+            navigate(props.optionKey);
+          }}
         >
           <div className="content">
             {props.icon}
